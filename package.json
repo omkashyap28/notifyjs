@@ -1,0 +1,74 @@
+{
+  "name": "notifyjs",
+  "version": "1.0.0",
+  "description": "Modern toast notification library for react",
+  "repository": "omkashyap28/notifyjs",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsup --watch",
+    "build": "tsup",
+    "test": "jest --runInBand",
+    "setup": "pnpm i && cd site && pnpm i && cd .. && pnpm run link",
+    "link": "pnpm link ./site/node_modules/react && pnpm link ./site/node_modules/react-dom",
+    "size": "size-limit",
+    "prepare": "husky"
+  },
+  "husky": {
+    "lint-staged": {
+      "**/*": "prettier --write --ignore-unknown"
+    }
+  },
+  "keywords": [
+    "react",
+    "motion",
+    "tailwindcss",
+    "toast",
+    "typescript"
+  ],
+  "author": "Hariom Kashyap",
+  "license": "MIT",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@10.27.0",
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.27",
+    "esbuild-minify-templates": "^0.13.1",
+    "husky": "^9.1.7",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "lint-staged": "^16.4.0",
+    "postcss": "^8.5.8",
+    "prettier": "3.8.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwindcss": "^4.2.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "goober": "^2.1.18",
+    "motion": "^12.37.0"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18",
+    "motion": ">=12"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

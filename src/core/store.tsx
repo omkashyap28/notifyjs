@@ -16,7 +16,6 @@ import {
   ToastType,
   ValueOrFunction,
 } from "./types.js";
-import { ValidatorFunction } from "mongoose";
 
 export const TOAST_LIMIT = 20;
 const TOAST_REMOVE_DELAY = 1000;

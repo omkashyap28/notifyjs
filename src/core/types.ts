@@ -27,7 +27,7 @@ export const resolveValue = <TValue, TArg>(
   arg: TArg
 ): TValue => (isFunction(valOrFunction) ? valOrFunction(arg) : valOrFunction);
 
-export interface ToastProvider {
+export interface NotifyProviderTypes {
   position:
     | "top-left"
     | "top-center"
@@ -65,6 +65,7 @@ export interface ToastAPI {
 export interface NotifyContextType {
   toasts: Toast[];
   toast: ToastAPI;
+  config: NotifyProviderTypes;
   dismissToast: (id: string) => void;
   removeToast: (id: string) => void;
 }

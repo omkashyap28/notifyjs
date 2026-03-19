@@ -1,8 +1,16 @@
 import { CSSProperties } from "react";
 
-export type ToastType = "success" | "error" | "warning" | "info" | "custom";
+export type ToastType =
+  | "success"
+  | "error"
+  | "warning"
+  | "info"
+  | "loading"
+  | "custom";
 
 export type Renderable = React.ReactElement | string | null;
+
+export type ToastDuration = 5 | 7 | 10 | 12 | 15;
 
 export type ValueFunction<TValue, TArg> = (arg: TArg) => TValue;
 export type ValueOrFunction<TValue, TArg> =
@@ -29,7 +37,7 @@ export interface ToastProvider {
     | "bottom-right";
   radius: "none" | "sm" | "md" | "lg" | "xl" | "full";
   theme: "light" | "dark" | "system";
-  toastDuration: 5 | 7 | 10 | 12 | 15;
+  toastDuration: ToastDuration;
   border: "solid" | "animated" | "none";
   borderColor: string;
   animationDuration: number;
@@ -37,31 +45,45 @@ export interface ToastProvider {
   dismissable: boolean;
   stackType: "stack" | "card";
   icons: "visible" | "hidden";
+  toastLimit: number;
+}
+
+export type ToastHandler = (
+  msg: ValueOrFunction<Renderable, Toast>,
+  opts?: Partial<Toast>
+) => string;
+
+export interface ToastAPI {
+  success: ToastHandler;
+  error: ToastHandler;
+  loading: ToastHandler;
+  info: ToastHandler;
+  warning: ToastHandler;
+  custom: ToastHandler;
 }
 
 export interface NotifyContextType {
-  toasts: [];
-  addToast: (message: string, type: ToastType, icon: Renderable) => void;
-  success: (message: string, icon: Renderable) => void;
-  info: (message: string, icon: Renderable) => void;
-  warning: (message: string, icon: Renderable) => void;
-  error: (message: string, icon: Renderable) => void;
-  custom: (message: string, type: string, icon: Renderable) => void;
+  toasts: Toast[];
+  toast: ToastAPI;
+  dismissToast: (id: string) => void;
   removeToast: (id: string) => void;
 }
 
 export type Toast = {
   id: string;
+  title?: ValueOrFunction<Renderable, Toast>;
   message: ValueOrFunction<Renderable, Toast>;
   type: ToastType;
   toastId?: string;
   icon?: Renderable;
-  ariaProps: {
+  ariaProps?: {
     role: "status" | "alert";
     "aria-live": "assertive" | "off" | "polite";
   };
+  duration?: ToastDuration;
   className?: string;
-  style: CSSProperties;
+  style?: CSSProperties;
   height?: number;
-  dismissable: boolean;
+  dismissable?: boolean;
+  visible?: boolean;
 };

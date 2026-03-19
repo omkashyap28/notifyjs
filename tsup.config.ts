@@ -15,7 +15,7 @@ export default defineConfig([
     ...commonConfig,
     esbuildOptions: (options) => {
       options.banner = {
-        js: "use client",
+        js: `"use client"`,
       };
     },
     entry: ["src/index.ts"],

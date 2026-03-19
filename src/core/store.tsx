@@ -2,23 +2,38 @@ import {
   createContext,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useReducer,
   useRef,
+  useState,
 } from "react";
 import {
   NotifyContextType,
+  NotifyProviderTypes,
   Renderable,
   Toast,
   ToastAPI,
-  ToastDuration,
-  ToastProvider,
   ToastType,
   ValueOrFunction,
 } from "./types.js";
 
 export const TOAST_LIMIT = 20;
 const TOAST_REMOVE_DELAY = 1000;
+const DEFAULT_CONFIG: NotifyProviderTypes = {
+  position: "top-center",
+  radius: "sm",
+  theme: "system",
+  toastDuration: 5,
+  border: "animated",
+  borderColor: "#ff45ac",
+  animationDuration: 0.5,
+  ease: "ease-in",
+  dismissable: true,
+  stackType: "stack",
+  icons: "visible",
+  toastLimit: 20,
+};
 
 interface ToastSetting {
   toastLimit: number;
@@ -73,7 +88,13 @@ const reducer = (state: ToasterState, action: Action): ToasterState => {
           t.id === action.toast.id ? { ...t, ...action.toast } : t
         ),
       };
-
+    case ActionType.DISMISS_TOAST:
+      return {
+        ...state,
+        toasts: state.toasts.map((t) =>
+          t.id === action.toastId ? { ...t, visible: false } : t
+        ),
+      };
     case ActionType.REMOVE_TOAST:
       return {
         ...state,
@@ -91,7 +112,14 @@ const NotifyContext = createContext<NotifyContextType | null>(null);
 const uniqueId = () => crypto.randomUUID();
 
 // Context provider
-const Provider = ({ children }: { children: ReactNode }): ReactNode => {
+const Provider = ({
+  children,
+  config: userConfig,
+}: {
+  children: ReactNode;
+  config: NotifyProviderTypes;
+}) => {
+  // toast state
   const [state, dispatch] = useReducer(reducer, {
     toasts: [],
     setting: {
@@ -99,6 +127,13 @@ const Provider = ({ children }: { children: ReactNode }): ReactNode => {
     },
   });
 
+  // toast component config
+  const [config, setConfig] = useState<NotifyProviderTypes>({
+    ...DEFAULT_CONFIG,
+    ...userConfig,
+  });
+
+  // toast
   const timerRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(
     new Map()
   );
@@ -137,7 +172,7 @@ const Provider = ({ children }: { children: ReactNode }): ReactNode => {
       });
 
       if (duration !== Infinity) {
-        const timeout = setTimeout(() => dismissToast(id), duration);
+        const timeout = setTimeout(() => dismissToast(id), duration * 1000);
         timerRef.current.set(id, timeout);
       }
 
@@ -146,8 +181,12 @@ const Provider = ({ children }: { children: ReactNode }): ReactNode => {
     [dismissToast]
   );
 
-  const { toasts } = state;
+  useEffect(
+    () => setConfig((prev) => ({ ...prev, ...userConfig })),
+    [userConfig]
+  );
 
+  const { toasts } = state;
   const toast: ToastAPI = {
     success: (msg: ValueOrFunction<Renderable, Toast>, opts?: Partial<Toast>) =>
       addToast(msg, "success", opts),
@@ -167,10 +206,11 @@ const Provider = ({ children }: { children: ReactNode }): ReactNode => {
     () => ({
       toasts,
       toast,
+      config,
       dismissToast,
       removeToast,
     }),
-    [toasts, addToast, dismissToast, removeToast]
+    [toasts, config, dismissToast, removeToast]
   );
 
   return (

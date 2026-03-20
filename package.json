@@ -4,10 +4,20 @@
   "description": "Modern toast notification library for react",
   "repository": "omkashyap28/notifyjs",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "scripts": {
-    "start": "tsup --watch",
-    "build": "tsup",
+    "start": "tsup && pnpm run tailwindcss --watch",
+    "build": "tsup && pnpm run tailwindcss",
+    "tailwindcss": "npx @tailwindcss/cli -i ./src/index.css -o ./dist/index.css",
     "test": "jest --runInBand",
     "setup": "pnpm i && cd site && pnpm i && cd .. && pnpm run link",
     "link": "pnpm link ./site/node_modules/react && pnpm link ./site/node_modules/react-dom",
@@ -19,6 +29,20 @@
       "**/*": "prettier --write --ignore-unknown"
     }
   },
+  "size-limit": [
+    {
+      "path": "dist/index.js",
+      "limit": "5.5 KB"
+    },
+    {
+      "path": "dist/index.cjs",
+      "limit": "5.5 KB"
+    },
+    {
+      "path": "dist/index.css",
+      "limit": "5.5 KB"
+    }
+  ],
   "keywords": [
     "react",
     "motion",
@@ -41,6 +65,8 @@
   },
   "packageManager": "pnpm@10.27.0",
   "devDependencies": {
+    "@size-limit/preset-small-lib": "^12.0.1",
+    "@tailwindcss/cli": "^4.2.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.27",
@@ -49,22 +75,23 @@
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
     "lint-staged": "^16.4.0",
+    "motion": "^12.37.0",
     "postcss": "^8.5.8",
     "prettier": "3.8.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "size-limit": "^12.0.1",
     "tailwindcss": "^4.2.1",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "goober": "^2.1.18",
-    "motion": "^12.37.0"
+    "goober": "^2.1.18"
   },
   "peerDependencies": {
+    "motion": ">=12",
     "react": ">=18",
-    "react-dom": ">=18",
-    "motion": ">=12"
+    "react-dom": ">=18"
   },
   "browserslist": [
     "> 1%",

@@ -6,6 +6,7 @@ export type ToastType =
   | "warning"
   | "info"
   | "loading"
+  | "blank"
   | "custom";
 
 export type Renderable = React.ReactElement | string | null;
@@ -36,10 +37,8 @@ export interface NotifyProviderTypes {
     | "bottom-center"
     | "bottom-right";
   radius: "none" | "sm" | "md" | "lg" | "xl" | "full";
-  theme: "light" | "dark" | "system";
   toastDuration: ToastDuration;
   border: "solid" | "animated" | "none";
-  borderColor: string;
   animationDuration: number;
   ease: "ease-in" | "ease-out" | "anticipate";
   dismissable: boolean;
@@ -50,29 +49,29 @@ export interface NotifyProviderTypes {
 
 export type ToastHandler = (
   msg: ValueOrFunction<Renderable, Toast>,
-  opts?: Partial<Toast>
+  opts?: ToastOptions
 ) => string;
 
-export interface ToastAPI {
+export interface ToastAPI extends ToastHandler {
   success: ToastHandler;
   error: ToastHandler;
   loading: ToastHandler;
   info: ToastHandler;
   warning: ToastHandler;
   custom: ToastHandler;
+  dismiss: (id: string) => void;
+  remove: (id: string) => void;
 }
 
 export interface NotifyContextType {
   toasts: Toast[];
   toast: ToastAPI;
   config: NotifyProviderTypes;
-  dismissToast: (id: string) => void;
-  removeToast: (id: string) => void;
 }
 
 export type Toast = {
   id: string;
-  title?: ValueOrFunction<Renderable, Toast>;
+  title?: string;
   message: ValueOrFunction<Renderable, Toast>;
   type: ToastType;
   toastId?: string;
@@ -87,4 +86,12 @@ export type Toast = {
   height?: number;
   dismissable?: boolean;
   visible?: boolean;
+};
+
+export type ToastOptions = Partial<
+  Pick<Toast, "id" | "icon" | "duration" | "ariaProps" | "className" | "style">
+>;
+
+export type DefaultToastOptions = ToastOptions & {
+  [key in ToastType]?: ToastOptions;
 };

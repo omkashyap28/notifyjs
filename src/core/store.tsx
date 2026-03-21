@@ -14,19 +14,17 @@ import {
   Renderable,
   Toast,
   ToastAPI,
+  ToastOptions,
   ToastType,
   ValueOrFunction,
 } from "./types.js";
 
-export const TOAST_LIMIT = 20;
 const TOAST_REMOVE_DELAY = 1000;
 const DEFAULT_CONFIG: NotifyProviderTypes = {
   position: "top-center",
   radius: "sm",
-  theme: "system",
   toastDuration: 5,
   border: "animated",
-  borderColor: "#ff45ac",
   animationDuration: 0.5,
   ease: "ease-in",
   dismissable: true,
@@ -35,9 +33,7 @@ const DEFAULT_CONFIG: NotifyProviderTypes = {
   toastLimit: 20,
 };
 
-interface ToastSetting {
-  toastLimit: number;
-}
+type Message = ValueOrFunction<Renderable, Toast>;
 
 enum ActionType {
   ADD_TOAST,
@@ -52,6 +48,7 @@ type Action =
   | {
       type: ActionType.ADD_TOAST;
       toast: Toast;
+      limit: number;
     }
   | {
       type: ActionType.UPDATE_TOAST;
@@ -68,7 +65,6 @@ type Action =
 
 export type ToasterState = {
   toasts: Toast[];
-  setting: ToastSetting;
 };
 
 const reducer = (state: ToasterState, action: Action): ToasterState => {
@@ -76,10 +72,7 @@ const reducer = (state: ToasterState, action: Action): ToasterState => {
     case ActionType.ADD_TOAST:
       return {
         ...state,
-        toasts: [action.toast, ...state.toasts].slice(
-          0,
-          state.setting.toastLimit
-        ),
+        toasts: [action.toast, ...state.toasts].slice(0, action.limit),
       };
     case ActionType.UPDATE_TOAST:
       return {
@@ -117,21 +110,21 @@ const Provider = ({
   config: userConfig,
 }: {
   children: ReactNode;
-  config: NotifyProviderTypes;
+  config: Partial<NotifyProviderTypes>;
 }) => {
   // toast state
   const [state, dispatch] = useReducer(reducer, {
     toasts: [],
-    setting: {
-      toastLimit: TOAST_LIMIT,
-    },
   });
 
   // toast component config
-  const [config, setConfig] = useState<NotifyProviderTypes>({
-    ...DEFAULT_CONFIG,
-    ...userConfig,
-  });
+  const config = useMemo(
+    () => ({
+      ...DEFAULT_CONFIG,
+      ...userConfig,
+    }),
+    [userConfig]
+  );
 
   // toast
   const timerRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(
@@ -164,11 +157,12 @@ const Provider = ({
       options?: Partial<Toast>
     ) => {
       const id = uniqueId();
-      const duration = options?.duration ?? 5;
+      const duration = options?.duration ?? config.toastDuration ?? 5;
 
       dispatch({
         type: ActionType.ADD_TOAST,
         toast: { id, message, type, visible: true, ...options },
+        limit: config.toastLimit ?? 10,
       });
 
       if (duration !== Infinity) {
@@ -178,39 +172,47 @@ const Provider = ({
 
       return id;
     },
-    [dismissToast]
+    [dismissToast, config.toastDuration, config.toastLimit]
   );
 
-  useEffect(
-    () => setConfig((prev) => ({ ...prev, ...userConfig })),
-    [userConfig]
-  );
+  useEffect(() => {
+    const timers = timerRef.current;
+    return () => {
+      timers.forEach((timer) => clearTimeout(timer));
+      timers.clear();
+    };
+  }, []);
 
   const { toasts } = state;
-  const toast: ToastAPI = {
-    success: (msg: ValueOrFunction<Renderable, Toast>, opts?: Partial<Toast>) =>
-      addToast(msg, "success", opts),
-    warning: (msg: ValueOrFunction<Renderable, Toast>, opts?: Partial<Toast>) =>
-      addToast(msg, "warning", opts),
-    info: (msg: ValueOrFunction<Renderable, Toast>, opts?: Partial<Toast>) =>
-      addToast(msg, "info", opts),
-    error: (msg: ValueOrFunction<Renderable, Toast>, opts?: Partial<Toast>) =>
-      addToast(msg, "error", opts),
-    loading: (msg: ValueOrFunction<Renderable, Toast>, opts?: Partial<Toast>) =>
-      addToast(msg, "loading", opts),
-    custom: (msg: ValueOrFunction<Renderable, Toast>, opts?: Partial<Toast>) =>
-      addToast(msg, "custom", opts),
-  };
+
+  const toastApi: ToastAPI = useMemo(() => {
+    const toast = (msg: Message, opts?: ToastOptions) =>
+      addToast(msg, "blank", opts);
+    toast.success = (msg: Message, opts?: ToastOptions) =>
+      addToast(msg, "success", opts);
+    toast.warning = (msg: Message, opts?: ToastOptions) =>
+      addToast(msg, "warning", opts);
+    toast.info = (msg: Message, opts?: ToastOptions) =>
+      addToast(msg, "info", opts);
+    toast.error = (msg: Message, opts?: ToastOptions) =>
+      addToast(msg, "error", opts);
+    toast.loading = (msg: Message, opts?: ToastOptions) =>
+      addToast(msg, "loading", opts);
+    toast.custom = (msg: Message, opts?: ToastOptions) =>
+      addToast(msg, "custom", opts);
+    toast.dismiss = (id: string) => dismissToast(id);
+    toast.remove = (id: string) => removeToast(id);
+
+    return toast;
+  }, [addToast, removeToast, dismissToast]);
 
   const value = useMemo(
     () => ({
       toasts,
-      toast,
+      toast: toastApi,
       config,
-      dismissToast,
-      removeToast,
     }),
-    [toasts, config, dismissToast, removeToast]
+    [toasts, toastApi, config]
   );
 
   return (

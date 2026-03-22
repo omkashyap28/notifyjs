@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+:root {
+  --toast-background: #ffffff;
+  --toast-foreground: #1717171;
+  --toast-button-background: #ffffff;
+  --toast-button-foreground: #262626;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --toast-background: #27272a;
+    --toast-foreground: #e5e5e5;
+    --toast-button-background: #262626;
+    --toast-button-foreground: #ffffff;
+  }
+}
+
+@theme inline {
+  --color-toast-background: var(--toast-background);
+  --color-toast-foreground: var(--toast-foreground);
+  --color-toast-button-background: var(--toast-button-background);
+  --color-toast-button-foreground: var(--toast-button-foreground);
+}
+
+button {
+  cursor: pointer !important;
+}
+
+/* @custom-variant dark (&:where(.dark, .dark *)); */

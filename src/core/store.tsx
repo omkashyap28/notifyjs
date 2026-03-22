@@ -6,7 +6,6 @@ import {
   useMemo,
   useReducer,
   useRef,
-  useState,
 } from "react";
 import {
   NotifyContextType,
@@ -20,18 +19,6 @@ import {
 } from "./types.js";
 
 const TOAST_REMOVE_DELAY = 1000;
-const DEFAULT_CONFIG: NotifyProviderTypes = {
-  position: "top-center",
-  radius: "sm",
-  toastDuration: 5,
-  border: "animated",
-  animationDuration: 0.5,
-  ease: "ease-in",
-  dismissable: true,
-  stackType: "stack",
-  icons: "visible",
-  toastLimit: 20,
-};
 
 type Message = ValueOrFunction<Renderable, Toast>;
 
@@ -120,7 +107,6 @@ const Provider = ({
   // toast component config
   const config = useMemo(
     () => ({
-      ...DEFAULT_CONFIG,
       ...userConfig,
     }),
     [userConfig]

@@ -29,22 +29,20 @@ export const resolveValue = <TValue, TArg>(
 ): TValue => (isFunction(valOrFunction) ? valOrFunction(arg) : valOrFunction);
 
 export interface NotifyProviderTypes {
-  position:
+  position?:
     | "top-left"
     | "top-center"
     | "top-right"
     | "bottom-left"
     | "bottom-center"
     | "bottom-right";
-  radius: "none" | "sm" | "md" | "lg" | "xl" | "full";
-  toastDuration: ToastDuration;
-  border: "solid" | "animated" | "none";
-  animationDuration: number;
-  ease: "ease-in" | "ease-out" | "anticipate";
-  dismissable: boolean;
-  stackType: "stack" | "card";
-  icons: "visible" | "hidden";
-  toastLimit: number;
+  radius?: "none" | "sm" | "md" | "lg" | "xl" | "full";
+  toastDuration?: ToastDuration;
+  border?: "solid" | "animated" | "none";
+  ease?: "ease-in" | "ease-out" | "anticipate";
+  dismissable?: boolean;
+  icons?: "visible" | "hidden";
+  toastLimit?: number;
 }
 
 export type ToastHandler = (
@@ -74,7 +72,6 @@ export type Toast = {
   title?: string;
   message: ValueOrFunction<Renderable, Toast>;
   type: ToastType;
-  toastId?: string;
   icon?: Renderable;
   ariaProps?: {
     role: "status" | "alert";
@@ -89,7 +86,10 @@ export type Toast = {
 };
 
 export type ToastOptions = Partial<
-  Pick<Toast, "id" | "icon" | "duration" | "ariaProps" | "className" | "style">
+  Pick<
+    Toast,
+    "id" | "title" | "icon" | "duration" | "ariaProps" | "className" | "style"
+  >
 >;
 
 export type DefaultToastOptions = ToastOptions & {

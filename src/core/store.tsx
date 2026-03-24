@@ -148,7 +148,7 @@ const Provider = ({
       dispatch({
         type: ActionType.ADD_TOAST,
         toast: { id, message, type, ...options },
-        limit: config.toastLimit ?? 20,
+        limit: config.toastLimit ?? 10,
       });
 
       if (duration !== Infinity) {

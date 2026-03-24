@@ -1,31 +1,26 @@
-import { Provider } from "../core/store.js";
-import { NotifyProviderTypes } from "../core/types.js";
-import { Container } from "./Container.js";
+import { AnimatePresence } from "motion/react";
+import { Toast } from "./Toast.js";
+import { useContext } from "react";
+import { NotifyContext } from "../core/store.js";
+import { TOAST_POSITION } from "./config/toast.config.js";
 
-export const NotifyToasts = ({
-  position = "top-center",
-  radius = "sm",
-  toastDuration = 5,
-  ease = "spring",
-  border = "solid",
-  dismissable = true,
-  icons = "visible",
-  toastLimit = 20,
-}: NotifyProviderTypes) => {
+export const NotifyToasts = () => {
+  const notify = useContext(NotifyContext);
+
+  if (!notify) throw new Error("NotifyContext not founded!!");
+
+  const toasts = notify.toasts;
+  const config = notify.config;
+
   return (
-    <Provider
-      config={{
-        position,
-        radius,
-        toastDuration,
-        ease,
-        border,
-        dismissable,
-        icons,
-        toastLimit,
-      }}
+    <div
+      className={`pointer-events-none fixed z-999 flex w-auto max-w-sm flex-col gap-1.5 transition-all duration-300 select-none ${TOAST_POSITION[config.position!] || TOAST_POSITION["bottom-right"]}`}
     >
-      <Container />
-    </Provider>
+      <AnimatePresence>
+        {toasts.map(({ id, title, message, type, ...props }) => (
+          <Toast key={id} id={id} message={message} type={type} {...props} />
+        ))}
+      </AnimatePresence>
+    </div>
   );
 };

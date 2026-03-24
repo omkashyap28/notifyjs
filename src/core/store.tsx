@@ -147,8 +147,8 @@ const Provider = ({
 
       dispatch({
         type: ActionType.ADD_TOAST,
-        toast: { id, message, type, visible: true, ...options },
-        limit: config.toastLimit ?? 10,
+        toast: { id, message, type, ...options },
+        limit: config.toastLimit ?? 20,
       });
 
       if (duration !== Infinity) {
@@ -186,6 +186,8 @@ const Provider = ({
       addToast(msg, "loading", opts);
     toast.custom = (msg: Message, opts?: ToastOptions) =>
       addToast(msg, "custom", opts);
+    toast.blank = (msg: Message, opts: ToastOptions) =>
+      addToast(msg, "blank", opts);
     toast.dismiss = (id: string) => dismissToast(id);
     toast.remove = (id: string) => removeToast(id);
 

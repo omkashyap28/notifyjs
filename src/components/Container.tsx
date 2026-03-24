@@ -14,7 +14,7 @@ export const Container = () => {
 
   return (
     <div
-      className={`fixed z-999 flex w-auto max-w-sm flex-col gap-1.5 transition-all duration-300 ${TOAST_POSITION[config.position!] || TOAST_POSITION["bottom-right"]}`}
+      className={`pointer-events-none fixed z-999 flex w-auto max-w-sm flex-col gap-1.5 transition-all duration-300 select-none ${TOAST_POSITION[config.position!] || TOAST_POSITION["bottom-right"]}`}
     >
       <AnimatePresence>
         {toasts.map(({ id, title, message, type, ...props }) => (

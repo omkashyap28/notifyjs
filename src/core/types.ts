@@ -36,10 +36,8 @@ export interface NotifyProviderTypes {
     | "bottom-left"
     | "bottom-center"
     | "bottom-right";
-  radius?: "none" | "sm" | "md" | "lg" | "xl" | "full";
   toastDuration?: ToastDuration;
-  border?: "solid" | "animated" | "none";
-  ease?: "ease-in" | "ease-out" | "anticipate";
+  ease?: "spring" | "tween";
   dismissable?: boolean;
   icons?: "visible" | "hidden";
   toastLimit?: number;
@@ -69,7 +67,7 @@ export interface NotifyContextType {
 
 export type Toast = {
   id: string;
-  title?: string;
+  title?: string | null;
   message: ValueOrFunction<Renderable, Toast>;
   type: ToastType;
   icon?: Renderable;
@@ -80,9 +78,7 @@ export type Toast = {
   duration?: ToastDuration;
   className?: string;
   style?: CSSProperties;
-  height?: number;
   dismissable?: boolean;
-  visible?: boolean;
 };
 
 export type ToastOptions = Partial<

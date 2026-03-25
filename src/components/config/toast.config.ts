@@ -9,7 +9,7 @@ export type ToastStyles = {
   error: string;
   warning: string;
   info: string;
-  loading: string;
+  promise: string;
   blank: string;
   custom: string;
 };
@@ -19,7 +19,7 @@ export type ToastIcons = {
   error: React.ElementType;
   info: React.ElementType;
   warning: React.ElementType;
-  loading: React.ElementType;
+  promise: React.ElementType;
   blank: React.ElementType | null;
   custom: React.ElementType | null;
 };
@@ -38,7 +38,7 @@ export let TOAST_STYLES: ToastStyles = {
   error: "text-red-500",
   warning: "text-orange-500",
   info: "text-yellow-500",
-  loading: "text-neutral-500",
+  promise: "text-neutral-500",
   blank: "text-neutral-500",
   custom: "text-neutral-500",
 };
@@ -52,7 +52,7 @@ export let TOAST_ICONS: ToastIcons = {
   error: Error,
   info: Info,
   warning: Warning,
-  loading: Loading,
+  promise: Loading,
   blank: null,
   custom: null,
 };

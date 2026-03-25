@@ -8,15 +8,18 @@ import {
   useRef,
 } from "react";
 import {
+  DefaultToastOptions,
   NotifyContextType,
   NotifyProviderTypes,
   Renderable,
+  resolveValue,
   Toast,
   ToastAPI,
   ToastOptions,
   ToastType,
   ValueOrFunction,
 } from "./types.js";
+import { useNotify } from "./useNotify.js";
 
 const TOAST_REMOVE_DELAY = 1000;
 
@@ -57,6 +60,15 @@ export type ToasterState = {
 const reducer = (state: ToasterState, action: Action): ToasterState => {
   switch (action.type) {
     case ActionType.ADD_TOAST:
+      const isExists = state.toasts.find((t) => t.id === action.toast.id);
+      if (isExists) {
+        return {
+          ...state,
+          toasts: state.toasts.map((t) =>
+            t.id === action.toast.id ? { ...t, ...action.toast } : t
+          ),
+        };
+      }
       return {
         ...state,
         toasts: [action.toast, ...state.toasts].slice(0, action.limit),
@@ -72,7 +84,7 @@ const reducer = (state: ToasterState, action: Action): ToasterState => {
       return {
         ...state,
         toasts: state.toasts.map((t) =>
-          t.id === action.toastId ? { ...t, visible: false } : t
+          t.id === action.toastId ? { ...t } : t
         ),
       };
     case ActionType.REMOVE_TOAST:
@@ -143,7 +155,7 @@ const Provider = ({
       options?: Partial<Toast>
     ) => {
       const id = uniqueId();
-      const duration = options?.duration ?? config.toastDuration ?? 5;
+      const duration = options?.toastDuration ?? config.toastDuration ?? 5;
 
       dispatch({
         type: ActionType.ADD_TOAST,
@@ -184,10 +196,59 @@ const Provider = ({
       addToast(msg, "error", opts);
     toast.loading = (msg: Message, opts?: ToastOptions) =>
       addToast(msg, "loading", opts);
-    toast.custom = (msg: Message, opts?: ToastOptions) =>
-      addToast(msg, "custom", opts);
-    toast.blank = (msg: Message, opts: ToastOptions) =>
-      addToast(msg, "blank", opts);
+    toast.promise = <T,>(
+      promise: Promise<T> | (() => Promise<T>),
+      msgs: {
+        loading: Renderable;
+        success?: ValueOrFunction<Renderable, T>;
+        error?: ValueOrFunction<Renderable, any>;
+      },
+      opts?: DefaultToastOptions
+    ): Promise<T> => {
+      // Trigger loading state
+      const id = toast.loading(msgs.loading, {
+        ...opts,
+        ...opts?.loading,
+      });
+
+      // Execute the function if provided, otherwise use the promise
+      const actualPromise = typeof promise === "function" ? promise() : promise;
+
+      actualPromise
+        .then((result) => {
+          const successMsg = msgs.success
+            ? resolveValue(msgs.success, result)
+            : undefined;
+
+          if (successMsg) {
+            toast.success(successMsg, {
+              id, // Replaces the loading toast with success
+              ...opts,
+              ...opts?.success,
+            });
+          } else {
+            toast.dismiss(id);
+          }
+        })
+        .catch((err) => {
+          const errorMsg = msgs.error
+            ? resolveValue(msgs.error, err)
+            : undefined;
+
+          if (errorMsg) {
+            toast.error(errorMsg, {
+              id,
+              ...opts,
+              ...opts?.error,
+            });
+          } else {
+            toast.dismiss(id);
+          }
+        });
+
+      return actualPromise;
+    };
+
     toast.dismiss = (id: string) => dismissToast(id);
     toast.remove = (id: string) => removeToast(id);
 
@@ -199,6 +260,7 @@ const Provider = ({
       toasts,
       toast: toastApi,
       config,
+      useNotify,
     }),
     [toasts, toastApi, config]
   );

@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { MotionStyle } from "motion";
 
 export type ToastType =
   | "success"
@@ -6,8 +6,8 @@ export type ToastType =
   | "warning"
   | "info"
   | "loading"
-  | "blank"
-  | "custom";
+  | "promise"
+  | "blank";
 
 export type Renderable = React.ReactElement | string | null;
 
@@ -37,7 +37,7 @@ export interface NotifyProviderTypes {
     | "bottom-center"
     | "bottom-right";
   toastDuration?: ToastDuration;
-  ease?: "spring" | "tween";
+  animationEase?: "spring" | "tween";
   dismissable?: boolean;
   icons?: "visible" | "hidden";
   toastLimit?: number;
@@ -48,13 +48,23 @@ export type ToastHandler = (
   opts?: ToastOptions
 ) => string;
 
+export type PromiseHandler = <T>(
+  promise: Promise<T> | (() => Promise<T>),
+  msgs: {
+    loading: Renderable;
+    success?: ValueOrFunction<Renderable, T>;
+    error?: ValueOrFunction<Renderable, any>;
+  },
+  opts?: DefaultToastOptions
+) => Promise<T>;
+
 export interface ToastAPI extends ToastHandler {
   success: ToastHandler;
   error: ToastHandler;
   loading: ToastHandler;
+  promise: PromiseHandler;
   info: ToastHandler;
   warning: ToastHandler;
-  custom: ToastHandler;
   dismiss: (id: string) => void;
   remove: (id: string) => void;
 }
@@ -63,11 +73,12 @@ export interface NotifyContextType {
   toasts: Toast[];
   toast: ToastAPI;
   config: NotifyProviderTypes;
+  useNotify: () => ToastAPI;
 }
 
 export type Toast = {
   id: string;
-  title?: string | null;
+  title?: string;
   message: ValueOrFunction<Renderable, Toast>;
   type: ToastType;
   icon?: Renderable;
@@ -75,17 +86,13 @@ export type Toast = {
     role: "status" | "alert";
     "aria-live": "assertive" | "off" | "polite";
   };
-  duration?: ToastDuration;
-  className?: string;
-  style?: CSSProperties;
+  toastDuration?: ToastDuration;
+  style?: MotionStyle;
   dismissable?: boolean;
 };
 
 export type ToastOptions = Partial<
-  Pick<
-    Toast,
-    "id" | "title" | "icon" | "duration" | "ariaProps" | "className" | "style"
-  >
+  Pick<Toast, "id" | "title" | "icon" | "toastDuration" | "ariaProps" | "style">
 >;
 
 export type DefaultToastOptions = ToastOptions & {

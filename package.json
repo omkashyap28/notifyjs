@@ -1,8 +1,12 @@
 {
   "name": "notifyjs",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Modern toast notification library for react",
-  "repository": "omkashyap28/notifyjs",
+  "repository": {
+    "type": "git",
+    "directory": "omkashyap28/notifyjs",
+    "url": "https://github.com/omkashyap28/notifyjs"
+  },
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -6,7 +6,7 @@ import { TOAST_ICONS, TOAST_STYLES } from "./config/toast.config.js";
 import Close from "./icons/Close.js";
 
 export const Toast = (props: ToastPropsType) => {
-  const { id, message, type, title } = props;
+  const { id, message, type, title, style, icon, ...prop } = props;
 
   const Icon = TOAST_ICONS[type];
 
@@ -57,11 +57,13 @@ export const Toast = (props: ToastPropsType) => {
       animate={animationVariants.animate}
       exit={animationVariants.exit}
       transition={{
-        type: "spring",
+        type: config.animationEase || "spring",
         stiffness: 300,
         damping: 25,
       }}
-      className={`group bg-toast-background/45 pointer-events-auto relative flex items-center gap-3 rounded-xl border border-neutral-500/20 px-3 py-2 text-[15px] font-medium shadow-md backdrop-blur-md ${props.className}`}
+      className="group bg-toast-background/85 pointer-events-auto relative flex items-center gap-3 rounded-xl border border-neutral-500/20 px-3 py-2 text-[15px] font-medium shadow-md backdrop-blur-md"
+      style={style!}
+      {...prop}
     >
       {config.icons === "visible" && Icon && (
         <motion.span
@@ -70,11 +72,10 @@ export const Toast = (props: ToastPropsType) => {
           transition={{ duration: 0.2, delay: 0.05 }}
           className={TOAST_STYLES[type]}
         >
-          <Icon size={24} />
+          {icon ? icon : <Icon size={24} />}
         </motion.span>
       )}
 
-      {/* Content */}
       <div className="flex flex-col">
         {title && (
           <span className={`capitalize ${TOAST_STYLES[type]}`}>{title}</span>
@@ -84,15 +85,14 @@ export const Toast = (props: ToastPropsType) => {
         </span>
       </div>
 
-      {config.dismissable ||
-        (props.dismissable && (
-          <button
-            onClick={() => toastApi.dismiss(id)}
-            className="bg-toast-button-background text-toast-button-foreground absolute top-1 right-1 z-99 flex h-5 w-5 -translate-1/2 translate-x-1/2 cursor-pointer items-center justify-center rounded-full border border-neutral-500/40 opacity-0 transition-all duration-200 group-hover:opacity-100"
-          >
-            <Close size={24} />
-          </button>
-        ))}
+      {config.dismissable && (
+        <button
+          onClick={() => toastApi.dismiss(id)}
+          className="bg-toast-button-background text-toast-button-foreground absolute top-1 right-1 z-99 flex h-5 w-5 -translate-1/2 translate-x-1/2 cursor-pointer items-center justify-center rounded-full border border-neutral-500/40 opacity-0 transition-all duration-200 group-hover:opacity-100"
+        >
+          <Close size={24} />
+        </button>
+      )}
     </motion.div>
   );
 };

@@ -6,17 +6,17 @@ export const NotifyToastsProvider = ({
   children,
   position = "bottom-right",
   toastDuration = 5,
-  ease = "spring",
+  animationEase = "spring",
   dismissable = true,
   icons = "visible",
-  toastLimit = 20,
+  toastLimit = 10,
 }: NotifyProviderTypes & { children: React.ReactNode }) => {
   return (
     <Provider
       config={{
         position,
         toastDuration,
-        ease,
+        animationEase,
         dismissable,
         icons,
         toastLimit,

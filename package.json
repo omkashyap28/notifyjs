@@ -1,5 +1,5 @@
 {
-  "name": "notifyjs",
+  "name": "alertjs",
   "version": "0.0.1",
   "description": "Modern toast notification library for react",
   "repository": "https://github.com/omkashyap28.notifyjs",
@@ -53,7 +53,6 @@
   "author": "Hariom Kashyap",
   "license": "MIT",
   "files": [
-    "src",
     "dist"
   ],
   "publishConfig": {

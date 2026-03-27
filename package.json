@@ -2,11 +2,7 @@
   "name": "notifyjs",
   "version": "0.0.1",
   "description": "Modern toast notification library for react",
-  "repository": {
-    "type": "git",
-    "directory": "omkashyap28/notifyjs",
-    "url": "https://github.com/omkashyap28/notifyjs"
-  },
+  "repository": "https://github.com/omkashyap28.notifyjs",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,7 +20,7 @@
     "tailwindcss": "npx @tailwindcss/cli -i ./src/index.css -o ./dist/index.css",
     "test": "jest --runInBand",
     "setup": "pnpm i && cd site && pnpm i && cd .. && pnpm run link",
-    "link": "pnpm link ./site/node_modules/react && pnpm link ./site/node_modules/react-dom",
+    "link": "pnpm link ./site/node_modules/react && pnpm link ./site/node_modules/react-dom && pnpm link ./site/node_modules/motion",
     "size": "size-limit",
     "prepare": "husky"
   },
@@ -79,7 +75,7 @@
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
     "lint-staged": "^16.4.0",
-    "motion": "^12.37.0",
+    "motion": "^12.38.0",
     "postcss": "^8.5.8",
     "prettier": "3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",

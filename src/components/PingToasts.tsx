@@ -1,16 +1,16 @@
 import { AnimatePresence } from "motion/react";
 import { Toast } from "./Toast.js";
 import { useContext } from "react";
-import { NotifyContext } from "../core/store.js";
+import { PingsContext } from "../core/store.js";
 import { TOAST_POSITION } from "./config/toast.config.js";
 
-export const NotifyToasts = () => {
-  const notify = useContext(NotifyContext);
+export const PingsToasts = () => {
+  const ping = useContext(PingsContext);
 
-  if (!notify) throw new Error("NotifyContext not founded!!");
+  if (!ping) throw new Error("PingsContext not founded!!");
 
-  const toasts = notify.toasts;
-  const config = notify.config;
+  const toasts = ping.toasts;
+  const config = ping.config;
 
   return (
     <div

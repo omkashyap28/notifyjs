@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Toast as ToastPropsType, resolveValue } from "../core/types.js";
 import { useContext, useMemo } from "react";
-import { NotifyContext } from "../core/store.js";
+import { PingsContext } from "../core/store.js";
 import { TOAST_ICONS, TOAST_STYLES } from "./config/toast.config.js";
 import Close from "./icons/Close.js";
 
@@ -10,9 +10,9 @@ export const Toast = (props: ToastPropsType) => {
 
   const Icon = TOAST_ICONS[type];
 
-  const context = useContext(NotifyContext);
+  const context = useContext(PingsContext);
 
-  if (!context) throw new Error("NotifyContext is not founded!!");
+  if (!context) throw new Error("PingsContext is not founded!!");
 
   const { config, toast: toastApi } = context;
   const renderMessage = resolveValue(message, props);

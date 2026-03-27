@@ -1,8 +1,10 @@
-import { Provider } from "../core/store.js";
-import { NotifyProviderTypes } from "../core/types.js";
-import { NotifyToasts } from "./NotifyToasts.js";
+"use server";
 
-export const NotifyToastsProvider = ({
+import { Provider } from "../core/store.js";
+import { PingsProviderTypes } from "../core/types.js";
+import { PingsToasts } from "./PingToasts.js";
+
+export const PingsToastsProvider = ({
   children,
   position = "bottom-right",
   toastDuration = 5,
@@ -10,7 +12,7 @@ export const NotifyToastsProvider = ({
   dismissable = true,
   icons = "visible",
   toastLimit = 10,
-}: NotifyProviderTypes & { children: React.ReactNode }) => {
+}: PingsProviderTypes & { children: React.ReactNode }) => {
   return (
     <Provider
       config={{
@@ -23,7 +25,7 @@ export const NotifyToastsProvider = ({
       }}
     >
       {children}
-      <NotifyToasts />
+      <PingsToasts />
     </Provider>
   );
 };

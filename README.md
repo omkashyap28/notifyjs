@@ -1,4 +1,4 @@
-# Notifyjs
+# React-Pings
 
 A open source modern toast notification library for reactjs apps. Built with reactjs, tailwindcss & motion in less than 5kb size 😎.
 
@@ -8,21 +8,21 @@ A open source modern toast notification library for reactjs apps. Built with rea
 
 Follow steps to start 👇🏻
 
-### Installation 
+### Installation
 
 Install with pnpm
 
 ```terminal
-pnpm add notifyjs
-``` 
+pnpm add react-pings
+```
 
 Install with npm
 
 ```terminal
-npm i notifyjs 
+npm i react-pings
 ```
 
-### Provide 
+### Provide
 
 ```typescript
 // main.ts/js/tsx/jsx
@@ -31,13 +31,13 @@ import { createRoot } from 'react-dom/client'
 import './../dist/index.css' // import css before your main css file if needed
 import './index.css'
 import App from './App.jsx'
-import { NotifyToastsProvider } from 'notifyjs'
+import { PingsToastsProvider } from 'react-pings'
 
 createRoot(document.getElementById('root')!).render(
 // wrap just one level above to your app component
-  <NotifyToastsProvider>
+  <PingsToastsProvider>
     <App />
-  </NotifyToastsProvider>
+  </PingsToastsProvider>
 )
 ```
 
@@ -46,11 +46,11 @@ createRoot(document.getElementById('root')!).render(
 ```typescript
 // component file 
 
-import { useNotify } from 'notifyjs'
+import { usePings } from 'react-pings'
 
 const App = () => {
 
-  const toast = useToast()
+  const toast = usePings()
 
   return (
     <div className="flex justify-center items-center h-screen w-full">

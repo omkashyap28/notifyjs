@@ -1,7 +1,0 @@
-src/
-site/
-.husky
-tsconfig.*
-tsup.*
-.prettierrc
-.prettierignore

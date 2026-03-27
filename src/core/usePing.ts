@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { NotifyContext } from "./store.js";
+import { PingsContext } from "./store.js";
 
-export function useNotify() {
-  const context = useContext(NotifyContext);
+export function usePings() {
+  const context = useContext(PingsContext);
   if (!context) throw new Error("useNotify only works with NotifyProvider");
   const { toast } = context;
   return toast;

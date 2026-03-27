@@ -9,8 +9,8 @@ import {
 } from "react";
 import {
   DefaultToastOptions,
-  NotifyContextType,
-  NotifyProviderTypes,
+  PingsContextType,
+  PingsProviderTypes,
   Renderable,
   resolveValue,
   Toast,
@@ -19,7 +19,7 @@ import {
   ToastType,
   ValueOrFunction,
 } from "./types.js";
-import { useNotify } from "./useNotify.js";
+import { usePings } from "./usePing.js";
 
 const TOAST_REMOVE_DELAY = 1000;
 
@@ -98,7 +98,7 @@ const reducer = (state: ToasterState, action: Action): ToasterState => {
 };
 
 // creating context
-const NotifyContext = createContext<NotifyContextType | null>(null);
+const PingsContext = createContext<PingsContextType | null>(null);
 
 // function to generate unique id
 const uniqueId = () => crypto.randomUUID();
@@ -109,7 +109,7 @@ const Provider = ({
   config: userConfig,
 }: {
   children: ReactNode;
-  config: Partial<NotifyProviderTypes>;
+  config: Partial<PingsProviderTypes>;
 }) => {
   // toast state
   const [state, dispatch] = useReducer(reducer, {
@@ -260,14 +260,14 @@ const Provider = ({
       toasts,
       toast: toastApi,
       config,
-      useNotify,
+      usePings,
     }),
     [toasts, toastApi, config]
   );
 
   return (
-    <NotifyContext.Provider value={value}>{children}</NotifyContext.Provider>
+    <PingsContext.Provider value={value}>{children}</PingsContext.Provider>
   );
 };
 
-export { NotifyContext, Provider };
+export { PingsContext, Provider };

@@ -1,8 +1,8 @@
 {
-  "name": "alertjs",
+  "name": "react-pings",
   "version": "0.0.1",
   "description": "Modern toast notification library for react",
-  "repository": "https://github.com/omkashyap28.notifyjs",
+  "repository": "https://github.com/omkashyap28/react-pings",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

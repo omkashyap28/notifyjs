@@ -1,4 +1,4 @@
-export * from "./core/useNotify.js";
+export * from "./core/usePing.js";
 export * from "./core/types.js";
 
-export { NotifyToastsProvider } from "./components/NotifyToastsProvider.js";
+export { PingsToastsProvider } from "./components/PingsToastsProvider.js";

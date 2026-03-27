@@ -28,7 +28,7 @@ export const resolveValue = <TValue, TArg>(
   arg: TArg
 ): TValue => (isFunction(valOrFunction) ? valOrFunction(arg) : valOrFunction);
 
-export interface NotifyProviderTypes {
+export interface PingsProviderTypes {
   position?:
     | "top-left"
     | "top-center"
@@ -69,11 +69,11 @@ export interface ToastAPI extends ToastHandler {
   remove: (id: string) => void;
 }
 
-export interface NotifyContextType {
+export interface PingsContextType {
   toasts: Toast[];
   toast: ToastAPI;
-  config: NotifyProviderTypes;
-  useNotify: () => ToastAPI;
+  config: PingsProviderTypes;
+  usePings: () => ToastAPI;
 }
 
 export type Toast = {

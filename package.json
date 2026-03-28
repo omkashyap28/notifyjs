@@ -1,6 +1,6 @@
 {
   "name": "react-pings",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Modern toast notification library for react",
   "repository": "https://github.com/omkashyap28/react-pings",
   "type": "module",

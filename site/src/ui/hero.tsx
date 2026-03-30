@@ -32,20 +32,11 @@ export default function Hero() {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
   });
 
-  useEffect(() => {
-    fetch("https://api.github.com/repos/omkashyap28/react-pings")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(`Star count: ${data.stargazers_count}`);
-      })
-      .catch((error) => console.error("Error:", error));
-  }, []);
-
   return (
     <div className="relative z-1 flex h-[calc(100vh-64px)] w-full items-start justify-center md:items-center">
       <Image
         src="/background-image.avif"
-        className="pointer-events-none absolute inset-x-auto top-0 aspect-square h-212 w-212 mask-b-from-10 opacity-45 invert-50"
+        className="pointer-events-none absolute inset-x-auto top-0 aspect-square h-212 w-212 mask-b-from-10 opacity-75 invert-50"
         height={784}
         width={784}
         alt=""
@@ -78,7 +69,7 @@ export default function Hero() {
         </div>
         <div className="mt-12 flex w-fit items-center justify-between gap-5 text-left font-semibold text-neutral-500">
           <div className="flex items-center font-mono tracking-tighter">
-            <span className="text-semibold text-xl text-green-700">~</span>{" "}
+            <span className="text-semibold text-xl text-green-700 mr-1">~</span>{" "}
             <span className="text-semibold text-lg text-yellow-500">$</span>{" "}
             <span
               ref={commandRef}

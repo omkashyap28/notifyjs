@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
+  --scrollbar-color: #73737373;
 }
 
 .dark {
@@ -21,6 +22,22 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
+}
+
+.scrollbar-visible::-webkit-scrollbar {
+  width: 6px;
+  display: none;
+}
+.scrollbar-visible::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-visible::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-color);
+  border-radius: 20px;
+}
+.scrollbar-visible:hover::-webkit-scrollbar {
+  display: block;
 }
 
 button {

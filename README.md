@@ -28,7 +28,7 @@ npm i react-pings
 // main.ts/js/tsx/jsx
 
 import { createRoot } from 'react-dom/client'
-import './../dist/index.css' // import css before your main css file if needed
+import '../node_modules/react-pings//dist/index.css' // import css before your main css file if needed
 import './index.css'
 import App from './App.jsx'
 import { PingsToastsProvider } from 'react-pings'

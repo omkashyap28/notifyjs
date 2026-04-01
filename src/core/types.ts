@@ -36,6 +36,7 @@ export interface PingsProviderTypes {
     | "bottom-left"
     | "bottom-center"
     | "bottom-right";
+  top: string | number;
   toastDuration?: ToastDuration;
   animationEase?: "spring" | "tween";
   dismissable?: boolean;

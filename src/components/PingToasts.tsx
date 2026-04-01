@@ -12,9 +12,21 @@ export const PingsToasts = () => {
   const toasts = ping.toasts;
   const config = ping.config;
 
+  const setTop = () => {
+    const { top } = config;
+    if (typeof top === "string") {
+      return top;
+    } else {
+      return `${top}px`;
+    }
+  };
+
   return (
     <div
-      className={`pointer-events-none fixed z-999 flex w-auto max-w-sm flex-col gap-1.5 transition-all duration-300 select-none ${TOAST_POSITION[config.position!] || TOAST_POSITION["bottom-right"]}`}
+      className={`pointer-events-none fixed inset-0 z-999 flex w-auto max-w-sm flex-col gap-1.5 transition-all duration-300 select-none ${TOAST_POSITION[config.position!] || TOAST_POSITION["bottom-right"]}`}
+      style={{
+        paddingTop: setTop(),
+      }}
     >
       <AnimatePresence>
         {toasts.map(({ id, title, message, type, ...props }) => (

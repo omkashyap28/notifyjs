@@ -61,7 +61,7 @@ export const Toast = (props: ToastPropsType) => {
         stiffness: 300,
         damping: 25,
       }}
-      className="group bg-toast-background/85 pointer-events-auto relative flex items-center gap-3 rounded-xl border border-neutral-500/20 px-3 py-2 text-[15px] font-medium shadow-md backdrop-blur-md"
+      className="group bg-toast-background/95 pointer-events-auto relative flex items-center gap-3 rounded-xl border border-neutral-500/20 px-3 py-2 text-[15px] font-medium shadow-md backdrop-blur-sm"
       style={style!}
       {...prop}
     >

@@ -26,4 +26,4 @@ button {
   cursor: pointer !important;
 }
 
-/* @custom-variant dark (&:where(.dark, .dark *)); */
+@custom-variant dark (&:where(.dark, .dark *));

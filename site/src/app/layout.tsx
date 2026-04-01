@@ -7,17 +7,17 @@ import { Footer, Navbar } from "@/components";
 import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
+  variable: "--font-tahoma",
   subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+  variable: "--font-courier",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "React Pings",
+  title: "ReactPings - Toast Notification Library",
   description: "Modern toast notification library for react",
 };
 
@@ -29,14 +29,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background text-foreground ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full`}
       suppressHydrationWarning
     >
-      <body className="min-h-full w-full" cz-shortcut-listen="true">
-        <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
-            <Navbar />
-            <PingsProvider>{children}</PingsProvider>
-            <Footer />
+      <body className="min-h-full w-full" style={{ background: "#D4D0C8" }}>
+        <ThemeProvider attribute={"class"} defaultTheme="light" enableSystem={false}>
+          <Navbar />
+          <PingsProvider>{children}</PingsProvider>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

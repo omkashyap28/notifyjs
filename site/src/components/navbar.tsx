@@ -1,10 +1,9 @@
 "use client";
 
-import { SearchBar, Theme, Wrapper } from "@/components";
+import { SearchBar, Wrapper } from "@/components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
 
 export default function Navbar() {
   const path = usePathname();
@@ -13,120 +12,246 @@ export default function Navbar() {
 
   useEffect(() => {
     const activePath = path.replace(/^\/+|\/+$/g, "");
-
-    const handleActivePath = (newActiveLink: string) => {
-      setActive(newActiveLink);
-    };
-
     if (!activePath || activePath === "") {
-      handleActivePath("Home");
+      setActive("Home");
     } else {
       const found = navigationLinks.find((link) => link.url === path);
       if (found) {
-        handleActivePath(found.title);
+        setActive(found.title);
       } else {
         const lastSegment = activePath.split("/").pop();
         const formatted = lastSegment
-          ? lastSegment
-              .replace(/-/g, " ")
-              .replace(/\b\w/g, (c) => c.toUpperCase())
+          ? lastSegment.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
           : "Home";
-        handleActivePath(formatted);
+        setActive(formatted);
       }
     }
   }, [path]);
 
-  useEffect(() => {
-    const body = document.body;
-    if (mobileBar) {
-      body.style.overflow = "hidden";
-    } else {
-      body.style.overflow = "auto";
-    }
-  }, [mobileBar]);
-
   return (
     <>
-      <header className="bg-background sticky inset-x-0 top-0 z-99 flex h-16 w-full items-center justify-center">
-        <Wrapper>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center justify-start gap-10">
-              <div className="flex items-center gap-4">
-                <button
-                  className="block border-none sm:hidden"
-                  onClick={() => setMobileBar((prev) => !prev)}
-                  title="Open sidebar"
-                >
-                  <div className="flex flex-col items-center justify-center">
-                    <motion.div
-                      animate={{
-                        rotate: mobileBar ? 45 : 0,
-                        y: mobileBar ? 3.5 : 0,
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="bg-foreground my-0.75 h-px w-4 rounded"
-                    ></motion.div>
+      {/* Windows 2000 Taskbar */}
+      <header
+        style={{
+          background: "linear-gradient(to bottom, #1C5FB5 0%, #0A246A 50%, #0A246A 100%)",
+          borderBottom: "2px solid #00007B",
+          height: "30px",
+          position: "sticky",
+          top: 0,
+          zIndex: 9999,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 4px",
+          fontFamily: "Tahoma, Arial, sans-serif",
+        }}
+      >
+        {/* Start Button area */}
+        <div style={{ display: "flex", alignItems: "center", gap: "2px" }}>
+          {/* Windows Start button */}
+          <button
+            style={{
+              background: "linear-gradient(to bottom, #3C8C3C, #006400)",
+              borderTop: "1px solid #78D078",
+              borderLeft: "1px solid #78D078",
+              borderRight: "1px solid #005000",
+              borderBottom: "1px solid #005000",
+              borderRadius: "0 12px 12px 0",
+              color: "white",
+              fontFamily: "Tahoma, Arial, sans-serif",
+              fontWeight: "bold",
+              fontSize: "13px",
+              padding: "2px 12px 2px 6px",
+              height: "24px",
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              cursor: "pointer",
+              marginRight: "4px",
+            }}
+            title="Start"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" style={{ flexShrink: 0 }}>
+              <rect x="0" y="0" width="7" height="7" fill="#FF0000" />
+              <rect x="9" y="0" width="7" height="7" fill="#00CC00" />
+              <rect x="0" y="9" width="7" height="7" fill="#0000FF" />
+              <rect x="9" y="9" width="7" height="7" fill="#FFCC00" />
+            </svg>
+            <span style={{ letterSpacing: "0.5px" }}>start</span>
+          </button>
 
-                    <motion.div
-                      animate={{
-                        rotate: mobileBar ? -45 : 0,
-                        y: mobileBar ? -3.5 : 0,
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="bg-foreground my-0.75 h-px w-4 rounded"
-                    ></motion.div>
-                  </div>
-                </button>
-                <Link
-                  href="/"
-                  className="font-sans text-lg font-semibold"
-                  title="Logo"
-                >
-                  ReactPings
-                </Link>
-              </div>
-              <nav
-                className={`fixed inset-x-0 max-sm:top-16 ${mobileBar ? "opacity-100 max-sm:translate-x-0" : "max-sm:-translate-x-full max-sm:opacity-0"} max-sm:bg-background left-0 w-full items-center gap-3 bg-transparent transition-all duration-300 max-sm:h-[calc(100vh-64px)] max-sm:w-screen max-sm:p-3 max-sm:py-20 ${mobileBar && "max-sm:shadow-lg max-sm:shadow-neutral-800/20"} sm:relative sm:flex`}
+          {/* Separator */}
+          <div
+            style={{
+              width: "1px",
+              height: "20px",
+              background: "#00007B",
+              borderRight: "1px solid #3366CC",
+              marginRight: "6px",
+            }}
+          />
+
+          {/* Nav links as taskbar buttons */}
+          {navigationLinks.map(({ title, url }) => (
+            <Link
+              href={url}
+              key={title}
+              onClick={() => setActive(title)}
+              title={title}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+                padding: "2px 8px",
+                height: "22px",
+                fontFamily: "Tahoma, Arial, sans-serif",
+                fontSize: "11px",
+                fontWeight: active === title ? "bold" : "normal",
+                color: "white",
+                textDecoration: "none",
+                background: active === title
+                  ? "linear-gradient(to bottom, #0A246A, #1C5FB5)"
+                  : "transparent",
+                border: active === title
+                  ? "1px inset #00007B"
+                  : "1px solid transparent",
+                borderRadius: "2px",
+                minWidth: "80px",
+                textAlign: "center" as const,
+                boxShadow: active === title ? "inset 1px 1px 2px rgba(0,0,0,0.5)" : "none",
+              }}
+            >
+              <span
+                style={{
+                  width: "14px",
+                  height: "14px",
+                  background: "#87CEEB",
+                  border: "1px solid #4169E1",
+                  borderRadius: "2px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "8px",
+                  flexShrink: 0,
+                }}
               >
-                {navigationLinks.map(({ title, url }) => (
-                  <Link
-                    href={url}
-                    key={title}
-                    className={`relative overflow-hidden font-sans text-[16px] font-medium tracking-tight capitalize max-sm:block max-sm:w-full max-sm:py-1.5 max-sm:text-center sm:text-[14px] ${active === title ? "text-neutral-900 dark:text-neutral-100" : "text-neutral-500 dark:text-neutral-400"} transition-colors duration-150 hover:text-neutral-800 hover:dark:text-neutral-300`}
-                    onClick={() => {
-                      setActive(title);
-                      setMobileBar(false);
-                    }}
-                    title={title}
-                  >
-                    {title}
-                  </Link>
-                ))}
-              </nav>
-            </div>
+                {title[0]}
+              </span>
+              {title}
+            </Link>
+          ))}
+        </div>
 
-            <div className="flex items-center gap-4">
-              <SearchBar />
-              <Theme />
-            </div>
+        {/* System tray */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+            background: "linear-gradient(to bottom, #0A246A, #1C5FB5)",
+            border: "1px inset #00007B",
+            borderRadius: "2px",
+            padding: "1px 6px",
+            height: "22px",
+          }}
+        >
+          <SearchBar />
+          <div
+            style={{
+              color: "white",
+              fontSize: "11px",
+              fontFamily: "Tahoma, Arial, sans-serif",
+              borderLeft: "1px solid #3366CC",
+              paddingLeft: "6px",
+            }}
+          >
+            {new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
           </div>
-        </Wrapper>
+        </div>
       </header>
+
+      {/* Menu bar below taskbar */}
+      <div
+        style={{
+          background: "#D4D0C8",
+          borderBottom: "2px solid #808080",
+          padding: "0 8px",
+          display: "flex",
+          alignItems: "center",
+          gap: "0",
+          fontFamily: "Tahoma, Arial, sans-serif",
+          fontSize: "11px",
+          height: "22px",
+        }}
+      >
+        {["File", "Edit", "View", "Favorites", "Tools", "Help"].map((item) => (
+          <button
+            key={item}
+            style={{
+              background: "transparent",
+              border: "none",
+              padding: "2px 6px",
+              fontFamily: "Tahoma, Arial, sans-serif",
+              fontSize: "11px",
+              cursor: "pointer",
+              color: "#000000",
+            }}
+            onMouseEnter={(e) => {
+              (e.target as HTMLElement).style.background = "#0A246A";
+              (e.target as HTMLElement).style.color = "white";
+            }}
+            onMouseLeave={(e) => {
+              (e.target as HTMLElement).style.background = "transparent";
+              (e.target as HTMLElement).style.color = "#000000";
+            }}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* Address bar */}
+      <div
+        style={{
+          background: "#D4D0C8",
+          borderBottom: "1px solid #808080",
+          padding: "2px 8px",
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
+          fontFamily: "Tahoma, Arial, sans-serif",
+          fontSize: "11px",
+          height: "28px",
+        }}
+      >
+        <span style={{ fontWeight: "bold", color: "#000" }}>Address</span>
+        <div
+          style={{
+            flex: 1,
+            background: "white",
+            borderTop: "2px solid #808080",
+            borderLeft: "2px solid #808080",
+            borderRight: "2px solid #FFFFFF",
+            borderBottom: "2px solid #FFFFFF",
+            padding: "1px 4px",
+            fontFamily: "Tahoma, Arial, sans-serif",
+            fontSize: "11px",
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+          }}
+        >
+          <span style={{ color: "#0000EE" }}>🌐</span>
+          <span>http://reactpings.local/</span>
+        </div>
+        <button className="win-btn" style={{ minWidth: "50px", fontSize: "11px" }}>Go</button>
+      </div>
     </>
   );
 }
 
 const navigationLinks = [
-  {
-    title: "Home",
-    url: "/",
-  },
-  {
-    title: "Docs",
-    url: "/docs",
-  },
-  {
-    title: "Github",
-    url: "https://www.github.com/omkashyap28/react-pings",
-  },
+  { title: "Home", url: "/" },
+  { title: "Docs", url: "/docs" },
+  { title: "Github", url: "https://www.github.com/omkashyap28/react-pings" },
 ];

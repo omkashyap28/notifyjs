@@ -1,47 +1,166 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --scrollbar-color: #73737373;
+  /* Windows 2000 Color Palette */
+  --background: #D4D0C8;
+  --foreground: #000000;
+  --win-grey: #D4D0C8;
+  --win-dark-grey: #808080;
+  --win-light-grey: #ECECEC;
+  --win-titlebar: #0A246A;
+  --win-titlebar-end: #A6CAF0;
+  --win-titlebar-text: #FFFFFF;
+  --win-blue: #0000AA;
+  --win-button-face: #D4D0C8;
+  --win-button-shadow: #808080;
+  --win-button-dark-shadow: #404040;
+  --win-button-highlight: #FFFFFF;
+  --win-button-light: #E8E8E8;
+  --win-border-light: #FFFFFF;
+  --win-border-dark: #808080;
+  --win-border-darker: #404040;
+  --win-text: #000000;
+  --win-disabled: #808080;
+  --win-selection: #0A246A;
+  --win-selection-text: #FFFFFF;
+  --win-link: #0000EE;
+  --win-visited: #551A8B;
+  --scrollbar-color: #808080;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #D4D0C8;
+  --foreground: #000000;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-tahoma);
+  --font-mono: var(--font-courier);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
+  background: var(--win-grey);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif;
+  font-size: 11px;
   scroll-behavior: smooth;
 }
 
-.scrollbar-visible::-webkit-scrollbar {
-  width: 6px;
-  display: none;
+/* Windows 2000 raised button style */
+.win-btn {
+  background: var(--win-button-face);
+  border-top: 2px solid var(--win-button-highlight);
+  border-left: 2px solid var(--win-button-highlight);
+  border-right: 2px solid var(--win-button-dark-shadow);
+  border-bottom: 2px solid var(--win-button-dark-shadow);
+  color: var(--win-text);
+  font-family: 'Tahoma', Arial, sans-serif;
+  font-size: 11px;
+  padding: 4px 14px;
+  cursor: pointer;
+  min-width: 80px;
+  text-align: center;
+  user-select: none;
 }
-.scrollbar-visible::-webkit-scrollbar-track {
-  background: transparent;
+
+.win-btn:active {
+  border-top: 2px solid var(--win-button-dark-shadow);
+  border-left: 2px solid var(--win-button-dark-shadow);
+  border-right: 2px solid var(--win-button-highlight);
+  border-bottom: 2px solid var(--win-button-highlight);
+  padding-top: 5px;
+  padding-left: 15px;
 }
-.scrollbar-visible::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-color);
-  border-radius: 20px;
+
+.win-btn:hover {
+  background: var(--win-light-grey);
 }
-.scrollbar-visible:hover::-webkit-scrollbar {
+
+/* Windows 2000 inset/sunken border */
+.win-inset {
+  border-top: 2px solid var(--win-button-shadow);
+  border-left: 2px solid var(--win-button-shadow);
+  border-right: 2px solid var(--win-button-highlight);
+  border-bottom: 2px solid var(--win-button-highlight);
+}
+
+/* Windows 2000 raised border */
+.win-raised {
+  border-top: 2px solid var(--win-button-highlight);
+  border-left: 2px solid var(--win-button-highlight);
+  border-right: 2px solid var(--win-button-shadow);
+  border-bottom: 2px solid var(--win-button-shadow);
+}
+
+/* Window panel */
+.win-panel {
+  background: var(--win-grey);
+  border-top: 2px solid var(--win-button-highlight);
+  border-left: 2px solid var(--win-button-highlight);
+  border-right: 2px solid var(--win-button-dark-shadow);
+  border-bottom: 2px solid var(--win-button-dark-shadow);
+}
+
+/* Title bar gradient */
+.win-titlebar {
+  background: linear-gradient(to right, #0A246A, #A6CAF0);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 3px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+/* Window content area */
+.win-window {
+  background: var(--win-grey);
+  border: 2px solid;
+  border-color: var(--win-button-highlight) var(--win-button-dark-shadow) var(--win-button-dark-shadow) var(--win-button-highlight);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+::-webkit-scrollbar-track {
+  background: var(--win-grey);
+  border: 1px solid var(--win-button-shadow);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--win-button-face);
+  border-top: 2px solid var(--win-button-highlight);
+  border-left: 2px solid var(--win-button-highlight);
+  border-right: 2px solid var(--win-button-dark-shadow);
+  border-bottom: 2px solid var(--win-button-dark-shadow);
+}
+::-webkit-scrollbar-button {
+  background: var(--win-button-face);
+  border-top: 2px solid var(--win-button-highlight);
+  border-left: 2px solid var(--win-button-highlight);
+  border-right: 2px solid var(--win-button-dark-shadow);
+  border-bottom: 2px solid var(--win-button-dark-shadow);
   display: block;
+  height: 16px;
+  width: 16px;
 }
 
 button {
   cursor: pointer;
+}
+
+a {
+  color: var(--win-link);
+  text-decoration: underline;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

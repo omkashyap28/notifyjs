@@ -1,8 +1,7 @@
 "use client";
 
-import { CopyCheckIcon, CopyIcon, SparklesIcon } from "@/icons";
+import { CopyCheckIcon, CopyIcon } from "@/icons";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { usePings } from "react-pings";
 
@@ -20,9 +19,7 @@ export default function Hero() {
       await navigator.clipboard.writeText(command);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       setCopied(true);
-      timeoutRef.current = setTimeout(() => {
-        setCopied(false);
-      }, 5000);
+      timeoutRef.current = setTimeout(() => setCopied(false), 5000);
     } catch (error) {
       console.error(`Error on copy command: ${error}`);
     }
@@ -33,76 +30,393 @@ export default function Hero() {
   });
 
   return (
-    <div className="relative z-1 flex h-[calc(100vh-64px)] w-full items-start justify-center">
-      <Image
-        src="/background-image.avif"
-        loading="eager"
-        className="h-1lg pointer-events-none absolute inset-x-auto top-10 sm:-top-10 aspect-square w-lg mask-b-from-2 opacity-75 invert-50 md:h-212 md:w-212 md:mask-b-from-10"
-        height={784}
-        width={784}
-        alt=""
-      />
-      <div className="z-1 mx-auto mt-30 flex w-full max-w-5xl flex-col items-center text-center font-sans">
-        <h1 className="bg-linear-to-r from-neutral-800 to-neutral-700 bg-clip-text text-center text-6xl font-semibold tracking-tighter text-transparent md:text-7xl dark:from-neutral-200 dark:to-neutral-300">
-          New way to add toast notifications
-        </h1>
-        <p className="mx-auto mt-6 max-w-3xl text-center text-sm text-neutral-600 md:text-lg dark:text-neutral-400">
-          A open source modern toast notification library for react apps with
-          fully customizable designs and easy implemention without complex
-          setups.
-        </p>
-        <div className="mt-12 flex items-center justify-center gap-3 md:mt-12 md:gap-6">
-          <Link
-            href="/docs"
-            className="bg-foreground text-background rounded-md px-4 py-3 text-sm font-semibold shadow-sm shadow-neutral-700/20 transition-all duration-200 hover:bg-neutral-900 hover:shadow-lg md:text-lg hover:dark:bg-neutral-300"
-            title="Get started"
-          >
-            Get Started
-          </Link>
-          <button
-            onClick={() => ping("Welcome Toast")}
-            className="bg-background text-foreground relative rounded-md border border-neutral-500/30 px-4 py-3 pl-9 text-sm font-semibold transition-all duration-200 hover:bg-neutral-50 hover:shadow-sm hover:shadow-neutral-700/20 md:text-lg dark:hover:bg-neutral-900"
-            title="Generate random toast"
-          >
-            <span className="absolute top-0 left-3 translate-y-2">
-              <SparklesIcon size={22} />
-            </span>
-            Generate Toast
-          </button>
-        </div>
+    <div
+      className="relative z-1"
+      style={{
+        minHeight: "calc(100vh - 80px)",
+        background: "#D4D0C8",
+        padding: "16px",
+        fontFamily: "Tahoma, Arial, sans-serif",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "800px",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}
+      >
+        {/* Main Window */}
         <div
-          className="mt-6 flex w-fit items-center justify-between gap-5 text-left font-semibold text-neutral-500"
-          title="Copy"
+          className="win-window"
+          style={{ background: "#D4D0C8" }}
         >
-          <div
-            className="flex cursor-copy items-center font-mono tracking-tighter"
-            onClick={copyCommand}
-          >
-            <span className="text-semibold mr-1 text-xl text-green-700">~</span>{" "}
-            <span className="text-semibold text-lg text-yellow-500">$</span>{" "}
-            <span
-              ref={commandRef}
-              className="ml-3 text-sm! font-semibold md:text-[16px]"
-            >
-              npm install react-pings
-            </span>
+          {/* Title Bar */}
+          <div className="win-titlebar">
+            <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              {/* Window icon */}
+              <div
+                style={{
+                  width: "16px",
+                  height: "16px",
+                  background: "#FFD700",
+                  border: "1px solid #B8860B",
+                  borderRadius: "2px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "10px",
+                  flexShrink: 0,
+                }}
+              >
+                🔔
+              </div>
+              <span style={{ fontSize: "12px", fontWeight: "bold" }}>
+                ReactPings - Toast Notification Library
+              </span>
+            </div>
+            {/* Window controls */}
+            <div style={{ display: "flex", gap: "2px" }}>
+              {["_", "□", "×"].map((btn, i) => (
+                <button
+                  key={btn}
+                  title={["Minimize", "Maximize", "Close"][i]}
+                  style={{
+                    width: "16px",
+                    height: "14px",
+                    background: "#D4D0C8",
+                    borderTop: "1px solid #FFFFFF",
+                    borderLeft: "1px solid #FFFFFF",
+                    borderRight: "1px solid #404040",
+                    borderBottom: "1px solid #404040",
+                    fontSize: "9px",
+                    fontWeight: "bold",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    color: "#000",
+                    padding: 0,
+                    fontFamily: "Tahoma, Arial, sans-serif",
+                  }}
+                >
+                  {btn}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <button
-            className="group relative cursor-copy! p-1"
-            onClick={copyCommand}
+          {/* Menu strip */}
+          <div
+            style={{
+              background: "#D4D0C8",
+              borderBottom: "1px solid #808080",
+              padding: "1px 4px",
+              display: "flex",
+              gap: "2px",
+              fontSize: "11px",
+            }}
           >
-            <div className="inset absolute inset-x-0 bottom-[calc(100%+5px)] left-2 h-auto w-fit -translate-x-1/2 rounded-sm border border-neutral-500/30 bg-neutral-100 px-1 py-0.5 text-sm font-normal tracking-tight text-neutral-800 opacity-0 shadow-md shadow-neutral-500/10 filter-[drop-shadow(0_4px_3px_rgba(0,0,0,0.07))_drop-shadow(0_2px_2px_rgba(0,0,0,0.06))] group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-6 after:border-transparent after:border-t-neutral-100 dark:bg-neutral-900 dark:text-neutral-100 dark:shadow-neutral-700/10 dark:filter-[drop-shadow(0_4px_3px_rgba(200,200,200,0.01))_drop-shadow(0_2px_2px_rgba(200,200,200,0.01))] dark:after:border-t-neutral-900">
-              {!copied ? "Copy" : "Copied"}
+            {["File", "View", "Help"].map((m) => (
+              <button
+                key={m}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  padding: "1px 6px",
+                  fontSize: "11px",
+                  cursor: "pointer",
+                  fontFamily: "Tahoma, Arial, sans-serif",
+                  textDecoration: "none",
+                  color: "#000",
+                }}
+                onMouseEnter={(e) => {
+                  (e.target as HTMLElement).style.background = "#0A246A";
+                  (e.target as HTMLElement).style.color = "#FFF";
+                }}
+                onMouseLeave={(e) => {
+                  (e.target as HTMLElement).style.background = "transparent";
+                  (e.target as HTMLElement).style.color = "#000";
+                }}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+
+          {/* Window content */}
+          <div style={{ padding: "20px 24px 24px" }}>
+            {/* Hero content inside window */}
+            <div style={{ textAlign: "center", marginBottom: "20px" }}>
+              <h1
+                style={{
+                  fontSize: "28px",
+                  fontWeight: "bold",
+                  fontFamily: "Tahoma, Arial, sans-serif",
+                  color: "#0A246A",
+                  marginBottom: "10px",
+                  textShadow: "1px 1px 0 #FFFFFF",
+                }}
+              >
+                New way to add toast notifications
+              </h1>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#000000",
+                  maxWidth: "560px",
+                  margin: "0 auto 20px",
+                  lineHeight: "1.6",
+                  fontFamily: "Tahoma, Arial, sans-serif",
+                }}
+              >
+                A open source modern toast notification library for React apps with fully
+                customizable designs and easy implementation without complex setups.
+              </p>
             </div>
-            {!copied ? (
-              <CopyIcon size={14} strokeWidth={2} color="#737373" />
-            ) : (
-              <CopyCheckIcon size={14} strokeWidth={2} color="#737373" />
-            )}
-          </button>
+
+            {/* Info box with Win2k inset border */}
+            <div
+              className="win-inset"
+              style={{
+                background: "white",
+                padding: "10px 14px",
+                marginBottom: "20px",
+                fontSize: "11px",
+                fontFamily: "Tahoma, Arial, sans-serif",
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "10px",
+              }}
+            >
+              <span style={{ fontSize: "22px", lineHeight: 1, flexShrink: 0 }}>ℹ️</span>
+              <div>
+                <strong>Welcome to ReactPings!</strong>
+                <br />
+                ReactPings is a lightweight, customizable toast notification library for React
+                applications. Simply install via npm and add beautiful notifications to your app
+                in seconds. No complex configuration required.
+              </div>
+            </div>
+
+            {/* Install command */}
+            <div style={{ marginBottom: "20px" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "11px",
+                  fontWeight: "bold",
+                  marginBottom: "4px",
+                  fontFamily: "Tahoma, Arial, sans-serif",
+                }}
+              >
+                Install Command:
+              </label>
+              <div
+                className="win-inset"
+                style={{
+                  background: "black",
+                  color: "#C0C0C0",
+                  padding: "8px 12px",
+                  fontFamily: "Courier New, monospace",
+                  fontSize: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  cursor: "copy",
+                }}
+                onClick={copyCommand}
+              >
+                <span>
+                  <span style={{ color: "#00FF00" }}>C:\Users\Developer&gt; </span>
+                  <span ref={commandRef}>npm install react-pings</span>
+                </span>
+                <button
+                  onClick={copyCommand}
+                  title="Copy command"
+                  style={{
+                    background: "#D4D0C8",
+                    borderTop: "1px solid #FFFFFF",
+                    borderLeft: "1px solid #FFFFFF",
+                    borderRight: "1px solid #404040",
+                    borderBottom: "1px solid #404040",
+                    padding: "2px 6px",
+                    fontSize: "10px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "3px",
+                    color: "#000",
+                    fontFamily: "Tahoma, Arial, sans-serif",
+                  }}
+                >
+                  {!copied ? (
+                    <CopyIcon size={12} strokeWidth={2} color="#000000" />
+                  ) : (
+                    <CopyCheckIcon size={12} strokeWidth={2} color="#000000" />
+                  )}
+                  {!copied ? "Copy" : "Copied!"}
+                </button>
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "8px",
+                flexWrap: "wrap",
+              }}
+            >
+              <Link
+                href="/docs"
+                title="Get started"
+                style={{
+                  background: "#D4D0C8",
+                  borderTop: "2px solid #FFFFFF",
+                  borderLeft: "2px solid #FFFFFF",
+                  borderRight: "2px solid #404040",
+                  borderBottom: "2px solid #404040",
+                  color: "#000000",
+                  fontFamily: "Tahoma, Arial, sans-serif",
+                  fontSize: "11px",
+                  padding: "5px 20px",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  minWidth: "100px",
+                  justifyContent: "center",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = "#E8E8E8";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = "#D4D0C8";
+                }}
+              >
+                📄 Get Started
+              </Link>
+
+              <button
+                onClick={() => ping("Welcome Toast")}
+                title="Generate random toast"
+                style={{
+                  background: "#D4D0C8",
+                  borderTop: "2px solid #FFFFFF",
+                  borderLeft: "2px solid #FFFFFF",
+                  borderRight: "2px solid #404040",
+                  borderBottom: "2px solid #404040",
+                  color: "#000000",
+                  fontFamily: "Tahoma, Arial, sans-serif",
+                  fontSize: "11px",
+                  padding: "5px 20px",
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  minWidth: "100px",
+                  justifyContent: "center",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = "#E8E8E8";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = "#D4D0C8";
+                }}
+              >
+                ✨ Generate Toast
+              </button>
+
+              <Link
+                href="https://www.github.com/omkashyap28/react-pings"
+                title="View on GitHub"
+                style={{
+                  background: "#D4D0C8",
+                  borderTop: "2px solid #FFFFFF",
+                  borderLeft: "2px solid #FFFFFF",
+                  borderRight: "2px solid #404040",
+                  borderBottom: "2px solid #404040",
+                  color: "#000000",
+                  fontFamily: "Tahoma, Arial, sans-serif",
+                  fontSize: "11px",
+                  padding: "5px 20px",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  minWidth: "100px",
+                  justifyContent: "center",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = "#E8E8E8";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.background = "#D4D0C8";
+                }}
+              >
+                🐙 GitHub
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Feature tiles row */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
+          {features.map((f) => (
+            <div key={f.title} className="win-window" style={{ background: "#D4D0C8" }}>
+              <div className="win-titlebar" style={{ fontSize: "11px" }}>
+                <span>{f.icon} {f.title}</span>
+              </div>
+              <div style={{ padding: "10px 12px", fontSize: "11px", fontFamily: "Tahoma, Arial, sans-serif", lineHeight: "1.5" }}>
+                {f.description}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Status bar */}
+        <div
+          className="win-inset"
+          style={{
+            background: "#D4D0C8",
+            padding: "2px 8px",
+            fontSize: "11px",
+            fontFamily: "Tahoma, Arial, sans-serif",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <span>✅ ReactPings v1.0.0 loaded successfully</span>
+          <span style={{ color: "#0000AA" }}>
+            📦 Open Source &bull; MIT License
+          </span>
         </div>
       </div>
     </div>
   );
 }
+
+const features = [
+  {
+    icon: "⚡",
+    title: "Easy Setup",
+    description: "Install with a single npm command. No complex configuration required. Works out of the box with any React project.",
+  },
+  {
+    icon: "🎨",
+    title: "Customizable",
+    description: "Fully customizable designs. Change colors, positions, animations and more to match your app's style.",
+  },
+  {
+    icon: "📦",
+    title: "Lightweight",
+    description: "Zero dependencies. Ultra-small bundle size. Won't slow down your application. Ships only what you need.",
+  },
+];

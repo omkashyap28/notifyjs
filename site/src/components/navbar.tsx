@@ -92,7 +92,7 @@ export default function Navbar() {
                   <Link
                     href={url}
                     key={title}
-                    className={`relative overflow-hidden font-sans text-[16px] font-medium tracking-tight capitalize max-sm:block max-sm:w-full max-sm:py-1.5 max-sm:text-center sm:text-[14px] ${active === title.toLowerCase() ? "dark:text-neutral-150 text-neutral-900" : "text-neutral-500 dark:text-neutral-400"} transition-colors duration-150 hover:text-neutral-800 hover:dark:text-neutral-300`}
+                    className={`relative overflow-hidden font-sans text-[16px] font-medium tracking-tight capitalize max-sm:block max-sm:w-full max-sm:py-1.5 max-sm:text-center sm:text-[14px] ${active === title ? "text-neutral-900 dark:text-neutral-100" : "text-neutral-500 dark:text-neutral-400"} transition-colors duration-150 hover:text-neutral-800 hover:dark:text-neutral-300`}
                     onClick={() => {
                       setActive(title);
                       setMobileBar(false);

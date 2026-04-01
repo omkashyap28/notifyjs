@@ -33,16 +33,17 @@ export default function Hero() {
   });
 
   return (
-    <div className="relative z-1 flex h-[calc(100vh-64px)] w-full items-start justify-center md:items-center">
+    <div className="relative z-1 flex h-[calc(100vh-64px)] w-full items-start justify-center">
       <Image
         src="/background-image.avif"
-        className="pointer-events-none absolute inset-x-auto top-0 aspect-square h-212 w-212 mask-b-from-10 opacity-75 invert-50"
+        loading="eager"
+        className="h-1lg pointer-events-none absolute inset-x-auto top-10 sm:-top-10 aspect-square w-lg mask-b-from-2 opacity-75 invert-50 md:h-212 md:w-212 md:mask-b-from-10"
         height={784}
         width={784}
         alt=""
       />
-      <div className="z-1 mx-auto mt-25 flex w-full max-w-5xl flex-col items-center text-center font-sans">
-        <h1 className="bg-linear-to-r from-neutral-800 to-neutral-700 bg-clip-text text-center text-6xl font-semibold tracking-tighter text-transparent md:text-9xl dark:from-neutral-200 dark:to-neutral-300">
+      <div className="z-1 mx-auto mt-30 flex w-full max-w-5xl flex-col items-center text-center font-sans">
+        <h1 className="bg-linear-to-r from-neutral-800 to-neutral-700 bg-clip-text text-center text-6xl font-semibold tracking-tighter text-transparent md:text-7xl dark:from-neutral-200 dark:to-neutral-300">
           New way to add toast notifications
         </h1>
         <p className="mx-auto mt-6 max-w-3xl text-center text-sm text-neutral-600 md:text-lg dark:text-neutral-400">
@@ -54,12 +55,14 @@ export default function Hero() {
           <Link
             href="/docs"
             className="bg-foreground text-background rounded-md px-4 py-3 text-sm font-semibold shadow-sm shadow-neutral-700/20 transition-all duration-200 hover:bg-neutral-900 hover:shadow-lg md:text-lg hover:dark:bg-neutral-300"
+            title="Get started"
           >
             Get Started
           </Link>
           <button
             onClick={() => ping("Welcome Toast")}
             className="bg-background text-foreground relative rounded-md border border-neutral-500/30 px-4 py-3 pl-9 text-sm font-semibold transition-all duration-200 hover:bg-neutral-50 hover:shadow-sm hover:shadow-neutral-700/20 md:text-lg dark:hover:bg-neutral-900"
+            title="Generate random toast"
           >
             <span className="absolute top-0 left-3 translate-y-2">
               <SparklesIcon size={22} />
@@ -67,9 +70,15 @@ export default function Hero() {
             Generate Toast
           </button>
         </div>
-        <div className="mt-12 flex w-fit items-center justify-between gap-5 text-left font-semibold text-neutral-500">
-          <div className="flex items-center font-mono tracking-tighter">
-            <span className="text-semibold text-xl text-green-700 mr-1">~</span>{" "}
+        <div
+          className="mt-6 flex w-fit items-center justify-between gap-5 text-left font-semibold text-neutral-500"
+          title="Copy"
+        >
+          <div
+            className="flex cursor-copy items-center font-mono tracking-tighter"
+            onClick={copyCommand}
+          >
+            <span className="text-semibold mr-1 text-xl text-green-700">~</span>{" "}
             <span className="text-semibold text-lg text-yellow-500">$</span>{" "}
             <span
               ref={commandRef}
@@ -80,10 +89,10 @@ export default function Hero() {
           </div>
 
           <button
-            className="group relative cursor-copy p-1"
+            className="group relative cursor-copy! p-1"
             onClick={copyCommand}
           >
-            <div className="inset absolute inset-x-0 bottom-[calc(100%+5px)] left-2 h-auto w-fit -translate-x-1/2 rounded-sm border border-neutral-500/30 bg-neutral-100 px-1 py-0.5 text-sm font-normal tracking-tight text-neutral-800 opacity-0 shadow-md shadow-neutral-500/10 filter-[drop-shadow(0_4px_3px_rgba(0,0,0,0.07))_drop-shadow(0_2px_2px_rgba(0,0,0,0.06))] group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-6 after:border-transparent after:border-t-neutral-100 dark:bg-neutral-900 dark:text-neutral-100 dark:shadow-neutral-700/10 dark:filter-[drop-shadow(0_4px_3px_rgba(200,200,200,0.06))_drop-shadow(0_2px_2px_rgba(200,200,200,0.04))] dark:after:border-t-neutral-900">
+            <div className="inset absolute inset-x-0 bottom-[calc(100%+5px)] left-2 h-auto w-fit -translate-x-1/2 rounded-sm border border-neutral-500/30 bg-neutral-100 px-1 py-0.5 text-sm font-normal tracking-tight text-neutral-800 opacity-0 shadow-md shadow-neutral-500/10 filter-[drop-shadow(0_4px_3px_rgba(0,0,0,0.07))_drop-shadow(0_2px_2px_rgba(0,0,0,0.06))] group-hover:opacity-100 after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-6 after:border-transparent after:border-t-neutral-100 dark:bg-neutral-900 dark:text-neutral-100 dark:shadow-neutral-700/10 dark:filter-[drop-shadow(0_4px_3px_rgba(200,200,200,0.01))_drop-shadow(0_2px_2px_rgba(200,200,200,0.01))] dark:after:border-t-neutral-900">
               {!copied ? "Copy" : "Copied"}
             </div>
             {!copied ? (

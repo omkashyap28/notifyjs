@@ -1,101 +1,172 @@
 "use client";
 
+import { Wrapper } from "@/components";
+import { ChevronRightIcon } from "@/icons";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
-  const [activeLink, setActiveLink] = useState<string>("getting started");
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const path = usePathname();
+  const [active, setActive] = useState("Getting Started");
+
+  useEffect(() => {
+    const body = document.body;
+    if (sidebarVisible) {
+      body.style.overflow = "hidden";
+    } else {
+      body.style.overflow = "auto";
+    }
+  }, [sidebarVisible]);
+
+  useEffect(() => {
+    let activePath = path.replace(/^\/docs\/?/, "");
+    activePath = activePath.replace(/^\/+|\/+$/g, "");
+
+    const handleActivePath = (newActiveLink: string) => {
+      setActive(newActiveLink);
+    };
+
+    if (!activePath || activePath === "") {
+      handleActivePath("Getting Started");
+    } else {
+      const allLinks = [...docsLinks, ...componentsLinks];
+      const found = allLinks.find((link) => link.url === path);
+      if (found) {
+        handleActivePath(found.title);
+      } else {
+        const lastSegment = activePath.split("/").pop();
+        const formatted = lastSegment
+          ? lastSegment
+              .replace(/-/g, " ")
+              .replace(/\b\w/g, (c) => c.toUpperCase())
+          : "Getting Started";
+        handleActivePath(formatted);
+      }
+    }
+  }, [path]);
 
   return (
-    <div className="scrollbar-visible fixed top-16 right-auto bottom-0 left-0 h-[calc(100vh-70px)] w-66 -translate-x-full overflow-y-auto p-4 md:sticky md:translate-x-0">
-      <div>
-        <h3 className="mb-3 text-sm font-semibold text-neutral-500">
-          Introduction
-        </h3>
-        <div className="flex flex-col justify-start gap-0.5">
-          {docsLinks.map(({ title, url }) => (
-            <Link
-              key={title}
-              href={url}
-              onClick={() => setActiveLink(title.toLowerCase())}
-              className={`group dark:hover:bg-neutral-90 relative z-1 overflow-hidden rounded-md bg-transparent px-3 py-1 font-sans text-[17px] font-normal tracking-tight capitalize transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-neutral-900 ${activeLink === title.toLowerCase() ? "bg-neutral-200 dark:bg-neutral-900" : "bg-transparent"}`}
-            >
-              {title}
-            </Link>
-          ))}
-        </div>
+    <>
+      <div className="bg-background sticky top-16 left-0 z-9 w-screen border-y border-neutral-500/10 md:hidden">
+        <button
+          className="text-foregroud flex h-auto w-full items-center justify-start gap-1 p-3 px-4 text-lg"
+          onClick={() => setSidebarVisible((prev) => !prev)}
+        >
+          <motion.span
+            animate={{
+              rotate: sidebarVisible ? "90deg" : "0deg",
+            }}
+            transition={{
+              duration: 0.3,
+            }}
+          >
+            <ChevronRightIcon size={20} strokeWidth={2} />
+          </motion.span>
+          <span className="text-neutral-800 dark:text-neutral-300">Menu</span>
+        </button>
       </div>
-      <div>
-        <h3 className="my-3 text-sm font-semibold text-neutral-500">
-          Components
-        </h3>
-        <div className="flex flex-col justify-start gap-0.5">
-          {componentsLinks.map(({ title, url }) => (
-            <Link
-              key={title}
-              href={url}
-              onClick={() => setActiveLink(title.toLowerCase())}
-              className={`group dark:hover:bg-neutral-90 relative z-1 overflow-hidden rounded-md bg-transparent px-3 py-1 font-sans text-[17px] font-normal tracking-tight capitalize transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-neutral-900 ${activeLink === title.toLowerCase() ? "bg-neutral-200 dark:bg-neutral-900" : "bg-transparent"}`}
-            >
-              {title}
-            </Link>
-          ))}
-        </div>
+      <div
+        className={`scrollbar-visible bg-background fixed top-29.5 right-auto bottom-0 left-0 h-[calc(100vh-120px)] w-screen py-4 transition-transform duration-200 md:top-16 md:h-[calc(100vh-70px)] md:w-66 ${sidebarVisible ? "translate-y-0" : "max-md:-translate-y-[calc(100vh+200px)]"} overflow-y-auto md:sticky md:translate-x-0`}
+      >
+        <Wrapper>
+          <div>
+            <h3 className="mb-3 text-sm font-semibold text-neutral-500">
+              Introduction
+            </h3>
+            <div className="flex flex-col justify-start gap-0.5">
+              {docsLinks.map(({ title, url }) => (
+                <Link
+                  key={title}
+                  href={url}
+                  onClick={() => {
+                    setActive(title);
+                    setSidebarVisible(false);
+                  }}
+                  className={`group dark:hover:bg-neutral-90 relative z-1 overflow-hidden rounded-md bg-transparent px-3 py-1 font-sans text-[17px] font-normal tracking-tight capitalize transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-neutral-900 ${active === title ? "bg-neutral-400 dark:bg-neutral-900" : ""}`}
+                  title={title}
+                >
+                  {title}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="my-3 text-sm font-semibold text-neutral-500">
+              Components
+            </h3>
+            <div className="flex flex-col justify-start gap-0.5">
+              {componentsLinks.map(({ title, url }) => (
+                <Link
+                  key={title}
+                  href={url}
+                  onClick={() => setActive(title)}
+                  className={`group dark:hover:bg-neutral-90 relative z-1 overflow-hidden rounded-md bg-transparent px-3 py-1 font-sans text-[17px] font-normal tracking-tight capitalize transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-neutral-900 ${active === title ? "bg-neutral-200 dark:bg-neutral-900" : "bg-transparent"}`}
+                >
+                  {title}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </Wrapper>
       </div>
-    </div>
+    </>
+    // </>
   );
 }
 
 const docsLinks = [
   {
-    title: "getting started",
+    title: "Getting Started",
     url: "/docs",
   },
   {
-    title: "introducton",
+    title: "Introducton",
     url: "/docs/introduction",
   },
   {
-    title: "installation",
+    title: "Installation",
     url: "/docs/installation",
   },
   {
-    title: "theme",
+    title: "Theme",
     url: "/docs/theme",
   },
   {
-    title: "styling",
+    title: "Styling",
     url: "/docs/styling",
   },
   {
-    title: "customization",
+    title: "Customization",
     url: "/docs/customization",
   },
 ];
 
 const componentsLinks = [
   {
-    title: "success",
+    title: "Success",
     url: "#",
   },
   {
-    title: "error",
+    title: "Error",
     url: "#",
   },
   {
-    title: "alert",
+    title: "Alert",
     url: "#",
   },
   {
-    title: "info",
+    title: "Info",
     url: "#",
   },
   {
-    title: "blank",
+    title: "Blank",
     url: "#",
   },
   {
-    title: "promise",
+    title: "Promise",
     url: "#",
   },
 ];

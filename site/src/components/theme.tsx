@@ -2,9 +2,16 @@
 
 import { DarkThemeIcon, LightThemeIcon, SystemThemeIcon } from "@/icons";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function Theme() {
   const { setTheme, theme } = useTheme();
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    (() => setIsClient(true))();
+  }, []);
 
   const themeToggle = () => {
     if (theme === "light") setTheme("dark");
@@ -18,13 +25,19 @@ export default function Theme() {
       onClick={themeToggle}
       title="Toggle theme"
     >
-      {theme === "system" ? (
-        <SystemThemeIcon size={15} />
-      ) : theme === "light" ? (
-        <LightThemeIcon size={15} />
-      ) : theme === "dark" ? (
-        <DarkThemeIcon size={15} />
-      ) : null}
+      <span className="flex h-3.75 w-3.75 items-center justify-center">
+        {isClient ? (
+          theme === "system" ? (
+            <SystemThemeIcon size={15} />
+          ) : theme === "light" ? (
+            <LightThemeIcon size={15} />
+          ) : (
+            <DarkThemeIcon size={15} />
+          )
+        ) : (
+          <span className="h-3.75 w-3.75" />
+        )}
+      </span>
     </button>
   );
 }

@@ -1,4 +1,5 @@
 import { MotionStyle } from "motion";
+import { CSSProperties } from "react";
 
 export type ToastType =
   | "success"
@@ -36,7 +37,7 @@ export interface PingsProviderTypes {
     | "bottom-left"
     | "bottom-center"
     | "bottom-right";
-  top: string | number;
+  style?: CSSProperties | null;
   toastDuration?: ToastDuration;
   animationEase?: "spring" | "tween";
   dismissable?: boolean;

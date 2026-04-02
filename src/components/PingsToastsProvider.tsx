@@ -12,18 +12,18 @@ export const PingsToastsProvider = ({
   dismissable = true,
   icons = "visible",
   toastLimit = 10,
-  top = "1rem"
+  style = null,
 }: PingsProviderTypes & { children: React.ReactNode }) => {
   return (
     <Provider
       config={{
         position,
-        top,
         toastDuration,
         animationEase,
         dismissable,
         icons,
         toastLimit,
+        style,
       }}
     >
       {children}

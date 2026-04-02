@@ -37,13 +37,13 @@ export default function Hero() {
       <Image
         src="/background-image.avif"
         loading="eager"
-        className="h-1lg pointer-events-none absolute inset-x-auto top-10 sm:-top-10 aspect-square w-lg mask-b-from-2 opacity-75 invert-50 md:h-212 md:w-212 md:mask-b-from-10"
+        className="h-lg pointer-events-none absolute inset-x-auto top-10 aspect-square w-lg mask-b-from-2 opacity-75 invert-50 sm:-top-10 md:h-212 md:w-212 md:mask-b-from-10"
         height={784}
         width={784}
         alt=""
       />
-      <div className="z-1 mx-auto mt-30 flex w-full max-w-5xl flex-col items-center text-center font-sans">
-        <h1 className="bg-linear-to-r from-neutral-800 to-neutral-700 bg-clip-text text-center text-6xl font-semibold tracking-tighter text-transparent md:text-7xl dark:from-neutral-200 dark:to-neutral-300">
+      <div className="z-1 mx-auto mt-[15vh] flex w-full max-w-5xl flex-col items-center text-center font-sans md:mt-[20vh]">
+        <h1 className="bg-linear-to-r from-neutral-800 to-neutral-700 bg-clip-text text-center text-6xl font-semibold tracking-tighter text-transparent md:text-8xl dark:from-neutral-200 dark:to-neutral-300">
           New way to add toast notifications
         </h1>
         <p className="mx-auto mt-6 max-w-3xl text-center text-sm text-neutral-600 md:text-lg dark:text-neutral-400">

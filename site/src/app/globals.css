@@ -1,14 +1,21 @@
+@import "../../node_modules/react-pings/dist/index.css";
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
   --scrollbar-color: #73737373;
+  --slider-fill: #000000;
+  --slider-track: #d4d4d4;
+  --slider-thumb-border: #00000086;
 }
 
 .dark {
   --background: #0a0a0a;
   --foreground: #ededed;
+  --slider-fill: #ffffff;
+  --slider-track: #262626;
+  --slider-thumb-border: #ffffff86;
 }
 
 @theme inline {
@@ -38,6 +45,41 @@ body {
 }
 .scrollbar-visible:hover::-webkit-scrollbar {
   display: block;
+}
+
+/* Track */
+input[type="range"] {
+  height: 6px;
+  border-radius: 9999px;
+  appearance: none;
+}
+
+/* Chrome / Safari */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: var(--slider-fill);
+  border: 1px solid var(--slider-thumb-border) !important;
+  cursor: grab;
+  transition: background 0.2s ease;
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+/* Firefox */
+input[type="range"]::-moz-range-thumb:active {
+  cursor: grabbing;
+}
+input[type="range"]::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: var(--slider-fill);
+  border: 1px solid var(--slider-thumb-border) !important;
+  cursor: grab;
+  transition: background 0.2s ease;
 }
 
 button {

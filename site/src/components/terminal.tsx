@@ -1,6 +1,6 @@
 "use client";
 
-import { chatgptTerminalThemes } from "@/constants/themes";
+import { chatgptThemes } from "@/constants/themes";
 import { CopyCheckIcon, CopyIcon, TerminalIcon } from "@/icons";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -47,7 +47,7 @@ export default function Terminal({ children }: { children: string }) {
         {isClient ? (
           <SyntaxHighlighter
             language="terminal"
-            style={chatgptTerminalThemes[theme]}
+            style={chatgptThemes[theme]}
             showLineNumbers={false}
             customStyle={{
               margin: 0,

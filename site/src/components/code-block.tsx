@@ -1,6 +1,6 @@
 "use client";
 
-import { chatgptTheme } from "@/constants/themes";
+import { chatgptThemes } from "@/constants/themes";
 import { ChevronRightIcon, CopyCheckIcon, CopyIcon } from "@/icons";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -106,7 +106,7 @@ export default function CodeBlock({
         {isClient ? (
           <SyntaxHighlighter
             language={languages[0]}
-            style={chatgptTheme[theme]}
+            style={chatgptThemes[theme]}
             showLineNumbers={true}
             wrapLines={true}
             customStyle={{

@@ -13,6 +13,50 @@ export default function Hero() {
 
   const ping = usePings();
 
+  const generateToast = () => {
+    const random = Math.floor(Math.random() * 6);
+    switch (random) {
+      case 0:
+        ping.success("Success Toast");
+        break;
+      case 1:
+        ping.error("Error Toast");
+        break;
+      case 2:
+        ping.info("Info Toast");
+        break;
+      case 3:
+        ping.warning("Warning Toast");
+        break;
+      case 4:
+        ping("Blank Toast");
+        break;
+      case 5:
+        ping.promise(
+          new Promise((rej, res) => {
+            setTimeout(Math.random() > 0.5 ? rej : res, 1000);
+          }),
+          {
+            success: "Saved Successfull",
+            error: "Something went wrong",
+            loading: "Saving...",
+          }
+        );
+        break;
+      default:
+        ping.promise(
+          new Promise((rej, res) => {
+            setTimeout(Math.random() > 0.5 ? rej : res, 1000);
+          }),
+          {
+            success: "Saved Successfull",
+            error: "Something went wrong",
+            loading: "Saving...",
+          }
+        );
+    }
+  };
+
   async function copyCommand() {
     if (!commandRef.current) return;
     try {
@@ -46,7 +90,7 @@ export default function Hero() {
         <h1 className="bg-linear-to-r from-neutral-800 to-neutral-700 bg-clip-text text-center text-6xl font-semibold tracking-tighter text-transparent md:text-8xl dark:from-neutral-200 dark:to-neutral-300">
           New way to add toast notifications
         </h1>
-        <p className="mx-auto mt-6 max-w-3xl text-center text-sm text-neutral-600 md:text-lg dark:text-neutral-400">
+        <p className="mx-auto mt-6 max-w-lg md:max-w-3xl text-center text-sm text-neutral-600 md:text-lg dark:text-neutral-400">
           A open source modern toast notification library for react apps with
           fully customizable designs and easy implemention without complex
           setups.
@@ -60,13 +104,10 @@ export default function Hero() {
             Get Started
           </Link>
           <button
-            onClick={() => ping("Welcome Toast")}
-            className="bg-background text-foreground relative rounded-md border border-neutral-500/30 px-4 py-3 pl-9 text-sm font-semibold transition-all duration-200 hover:bg-neutral-50 hover:shadow-sm hover:shadow-neutral-700/20 md:text-lg dark:hover:bg-neutral-900"
+            onClick={() => generateToast()}
+            className="bg-background text-foreground rounded-md border border-neutral-500/30 px-4 py-3 text-sm font-semibold transition-all duration-200 hover:bg-neutral-50 hover:shadow-sm hover:shadow-neutral-700/20 md:text-lg dark:hover:bg-neutral-900"
             title="Generate random toast"
           >
-            <span className="absolute top-0 left-3 translate-y-2">
-              <SparklesIcon size={22} />
-            </span>
             Generate Toast
           </button>
         </div>

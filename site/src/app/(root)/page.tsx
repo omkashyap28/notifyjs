@@ -1,10 +1,14 @@
 import { Wrapper } from "@/components";
-import { Hero } from "@/ui";
+import { Instructions, Hero, Feedback } from "@/ui";
 
 export default function Page() {
   return (
-    <Wrapper>
-      <Hero />
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Hero />
+        <Instructions />
+      </Wrapper>
+      <Feedback />
+    </>
   );
 }

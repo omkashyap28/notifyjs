@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "../../node_modules/react-pings/dist/index.css";
 import "./globals.css";
 import PingsProvider from "@/components/pings-provider";
 import { Footer, Navbar } from "@/components";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider as NextThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,11 +32,16 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full w-full" cz-shortcut-listen="true">
-        <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
-            <Navbar />
-            <PingsProvider>{children}</PingsProvider>
-            <Footer />
-        </ThemeProvider>
+        <NextThemeProvider
+          attribute={"class"}
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <PingsProvider>{children}</PingsProvider>
+          <Footer />
+        </NextThemeProvider>
       </body>
     </html>
   );

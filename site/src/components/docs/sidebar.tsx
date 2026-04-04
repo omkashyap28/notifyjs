@@ -85,7 +85,7 @@ export default function Sidebar() {
                     setActive(title);
                     setSidebarVisible(false);
                   }}
-                  className={`group dark:hover:bg-neutral-90 relative z-1 overflow-hidden rounded-md bg-transparent px-3 py-1 font-sans text-[17px] font-normal tracking-tight capitalize transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-neutral-900 ${active === title ? "bg-neutral-400 dark:bg-neutral-900" : ""}`}
+                  className={`group relative z-1 overflow-hidden rounded-md bg-transparent px-3 py-1 font-sans text-[17px] font-normal tracking-tight capitalize transition-colors duration-150 hover:bg-neutral-100 dark:hover:bg-neutral-900 ${active === title ? "bg-neutral-400 dark:bg-neutral-900" : ""}`}
                   title={title}
                 >
                   {title}

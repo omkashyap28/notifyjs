@@ -109,7 +109,7 @@ export default function SearchBar() {
       </AnimatePresence>
       {visibility && (
         <div
-          className="fixed inset-0 h-full w-full bg-white/70 backdrop-blur-sm dark:bg-black/70"
+          className="fixed inset-0 h-full w-full bg-white/70 backdrop-blur-md dark:bg-black/70"
           onClick={() => setVisibility(false)}
         />
       )}

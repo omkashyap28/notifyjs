@@ -52,7 +52,7 @@ export default function Sidebar() {
     <>
       <div className="bg-background sticky top-16 left-0 z-9 w-screen border-y border-neutral-500/10 md:hidden">
         <button
-          className="text-foregroud flex h-auto w-full items-center justify-start gap-1 p-3 px-4 text-lg"
+          className="text-foregroud flex h-auto w-full items-center justify-start gap-1 px-4 py-3 text-lg"
           onClick={() => setSidebarVisible((prev) => !prev)}
         >
           <motion.span
@@ -102,7 +102,10 @@ export default function Sidebar() {
                 <Link
                   key={title}
                   href={url}
-                  onClick={() => setActive(title)}
+                  onClick={() => {
+                    setActive(title);
+                    setSidebarVisible(false);
+                  }}
                   className={`group dark:hover:bg-neutral-90 relative z-1 overflow-hidden rounded-md bg-transparent px-3 py-1 font-sans text-[17px] font-normal tracking-tight capitalize transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-neutral-900 ${active === title ? "bg-neutral-200 dark:bg-neutral-900" : "bg-transparent"}`}
                 >
                   {title}
@@ -113,7 +116,6 @@ export default function Sidebar() {
         </Wrapper>
       </div>
     </>
-    // </>
   );
 }
 
@@ -147,26 +149,26 @@ const docsLinks = [
 const componentsLinks = [
   {
     title: "Success",
-    url: "#",
+    url: "/docs/api/success",
   },
   {
     title: "Error",
-    url: "#",
+    url: "/docs/api/error",
   },
   {
-    title: "Alert",
-    url: "#",
+    title: "Warning",
+    url: "/docs/apiwarning/",
   },
   {
     title: "Info",
-    url: "#",
+    url: "/docs/api/info",
   },
   {
     title: "Blank",
-    url: "#",
+    url: "/docs/api/blank",
   },
   {
     title: "Promise",
-    url: "#",
+    url: "/docs/api/promise",
   },
 ];

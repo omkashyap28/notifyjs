@@ -65,7 +65,7 @@ export default function Navbar() {
                       }}
                       transition={{ duration: 0.3 }}
                       className="bg-foreground my-0.75 h-px w-4 rounded"
-                    ></motion.div>
+                    ></motion.div> 
 
                     <motion.div
                       animate={{
@@ -86,7 +86,7 @@ export default function Navbar() {
                 </Link>
               </div>
               <nav
-                className={`fixed inset-x-0 max-sm:top-16 ${mobileBar ? "opacity-100 max-sm:translate-x-0" : "max-sm:-translate-x-full max-sm:opacity-0"} max-sm:bg-background left-0 w-full items-center gap-3 bg-transparent transition-all duration-300 max-sm:h-[calc(100vh-64px)] max-sm:w-screen max-sm:p-3 max-sm:py-20 ${mobileBar && "max-sm:shadow-lg max-sm:shadow-neutral-800/20"} sm:relative sm:flex`}
+                className={`fixed inset-x-0 max-sm:top-16 ${mobileBar ? "opacity-100 max-sm:translate-x-0" : "max-sm:-translate-x-full max-sm:opacity-0"} max-sm:bg-background! left-0 w-full items-center gap-3 bg-transparent transition-all duration-300 max-sm:h-[calc(100vh-64px)] max-sm:w-screen max-sm:p-3 max-sm:py-20 ${mobileBar && "max-sm:shadow-lg max-sm:shadow-neutral-800/20"} sm:relative sm:flex`}
               >
                 {navigationLinks.map(({ title, url }) => (
                   <Link

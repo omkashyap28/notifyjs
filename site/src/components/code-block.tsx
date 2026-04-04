@@ -7,12 +7,9 @@ import { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { CodeBlockSkeleton } from "@/components/skeletons";
 import { AnimatePresence, motion } from "motion/react";
-
-type CodeBlockProps = {
-  languages?: Array<string>;
-  children: string;
-  fileName: string;
-};
+import { useAppStore } from "@/store";
+import { usePings } from "react-pings";
+import { CodeBlockProps } from "@/types";
 
 export default function CodeBlock({
   languages = ["javascript", "typescript"],
@@ -23,8 +20,12 @@ export default function CodeBlock({
   const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [selected, setSelected] = useState("Javascript");
 
+  const ping =  usePings()
+
+  const defaultLanguage = useAppStore(state => state.defaultLanguage)
+  const setDefaultLanguage = useAppStore(state => state.setDefaultLanguage)
+  
   useEffect(() => {
     (() => setIsClient(true))();
   }, []);
@@ -33,8 +34,10 @@ export default function CodeBlock({
     try {
       await navigator.clipboard.writeText(children);
       setCopied(true);
+      ping.success("Code copied")
       setTimeout(() => setCopied(false), 1500);
     } catch (err) {
+      ping.error("Copy failed")
       console.error("Copy failed", err);
     }
   };
@@ -51,7 +54,7 @@ export default function CodeBlock({
               className="text-foreground flex cursor-pointer items-center justify-between gap-2 rounded-md border border-transparent p-2 transition-all hover:border-neutral-500/20 hover:bg-neutral-100 dark:hover:bg-neutral-900"
               onClick={() => setIsOpen((prev) => !prev)}
             >
-              <span className="font-medium capitalize">{selected}</span>
+              <span className="font-medium capitalize">{defaultLanguage}</span>
               <ChevronRightIcon size={14} rotation={90} />
             </div>
 
@@ -74,19 +77,16 @@ export default function CodeBlock({
                       <div
                         key={language}
                         className={`text-foreground flex w-full cursor-pointer items-center justify-between px-2 py-1.5 text-sm capitalize transition-colors rounded dark:hover:bg-neutral-800 hover:bg-neutral-100 ${
-                          selected === language
+                          defaultLanguage === language
                             ? "bg-neutral-100 dark:bg-neutral-900"
                             : "bg-transparent"
                         }`}
                         onClick={() => {
-                          setSelected(language);
+                          setDefaultLanguage(language);
                           setIsOpen(false);
                         }}
                       >
                         {language}
-                        {/* {selected === language && (
-                    <Check className="h-4 w-4 text-neutral-100" />
-                  )} */}
                       </div>
                     ))}
                   </motion.div>

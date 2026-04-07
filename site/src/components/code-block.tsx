@@ -1,15 +1,15 @@
 "use client";
 
 import { chatgptThemes } from "@/constants/themes";
-import { ChevronRightIcon, CopyCheckIcon, CopyIcon } from "@/icons";
+import { ChevronRightIcon } from "@/icons";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { CodeBlockSkeleton } from "@/components/skeletons";
 import { AnimatePresence, motion } from "motion/react";
 import { useAppStore } from "@/store";
-import { usePings } from "react-pings";
 import { CodeBlockProps } from "@/types";
+import CopyButton from "./copy-button";
 
 export default function CodeBlock({
   languages = ["javascript", "typescript"],
@@ -17,30 +17,15 @@ export default function CodeBlock({
   fileName = "",
 }: CodeBlockProps) {
   const { resolvedTheme } = useTheme();
-  const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  const ping =  usePings()
+  const defaultLanguage = useAppStore((state) => state.defaultLanguage);
+  const setDefaultLanguage = useAppStore((state) => state.setDefaultLanguage);
 
-  const defaultLanguage = useAppStore(state => state.defaultLanguage)
-  const setDefaultLanguage = useAppStore(state => state.setDefaultLanguage)
-  
   useEffect(() => {
     (() => setIsClient(true))();
   }, []);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(children);
-      setCopied(true);
-      ping.success("Code copied")
-      setTimeout(() => setCopied(false), 1500);
-    } catch (err) {
-      ping.error("Copy failed")
-      console.error("Copy failed", err);
-    }
-  };
 
   const theme = resolvedTheme === "dark" ? "dark" : "light";
 
@@ -76,7 +61,7 @@ export default function CodeBlock({
                     {languages.map((language) => (
                       <div
                         key={language}
-                        className={`text-foreground flex w-full cursor-pointer items-center justify-between px-2 py-1.5 text-sm capitalize transition-colors rounded dark:hover:bg-neutral-800 hover:bg-neutral-100 ${
+                        className={`text-foreground flex w-full cursor-pointer items-center justify-between rounded px-2 py-1.5 text-sm capitalize transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800 ${
                           defaultLanguage === language
                             ? "bg-neutral-100 dark:bg-neutral-900"
                             : "bg-transparent"
@@ -94,12 +79,7 @@ export default function CodeBlock({
               )}
             </AnimatePresence>
           </div>
-          <button
-            onClick={handleCopy}
-            className="rounded px-2 py-2 text-xs transition hover:bg-neutral-300 dark:hover:bg-neutral-700"
-          >
-            {!copied ? <CopyIcon size={14} /> : <CopyCheckIcon size={14} />}
-          </button>
+          <CopyButton code={children} className="static" />
         </div>
       </div>
       <div className="overflow-auto">

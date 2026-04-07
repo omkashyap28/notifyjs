@@ -1,30 +1,20 @@
 "use client";
 
 import { chatgptThemes } from "@/constants/themes";
-import { CopyCheckIcon, CopyIcon, TerminalIcon } from "@/icons";
+import { TerminalIcon } from "@/icons";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { TerminalSkeleton } from "@/components/skeletons";
+import { CopyButton } from "@/components";
 
 export default function Terminal({ children }: { children: string }) {
-  const [copied, setCopied] = useState(false);
   const { resolvedTheme } = useTheme();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     (() => setIsClient(true))();
   }, []);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(children);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch (err) {
-      console.error("Copy failed", err);
-    }
-  };
 
   const theme = resolvedTheme === "dark" ? "dark" : "light";
 
@@ -35,12 +25,7 @@ export default function Terminal({ children }: { children: string }) {
           <TerminalIcon size={17} />
           Terminal
         </span>
-        <button
-          onClick={handleCopy}
-          className="rounded px-2 py-2 text-xs transition hover:bg-neutral-300 dark:hover:bg-neutral-700"
-        >
-          {!copied ? <CopyIcon size={14} /> : <CopyCheckIcon size={14} />}
-        </button>
+        <CopyButton code={children} className="static" />
       </div>
 
       <div className="overflow-auto">

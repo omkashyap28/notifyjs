@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
+import { componentsLinks, docsLinks } from "@/constants/links";
 
 export default function Sidebar() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -69,7 +70,7 @@ export default function Sidebar() {
         </button>
       </div>
       <div
-        className={`scrollbar-visible bg-background fixed top-29.5 right-auto bottom-0 left-0 h-[calc(100vh-120px)] w-screen py-4 transition-transform duration-200 md:top-16 md:h-[calc(100vh-70px)] md:w-66 ${sidebarVisible ? "translate-y-0" : "max-md:-translate-y-[calc(100vh+200px)]"} overflow-y-auto md:sticky md:translate-x-0`}
+        className={`scrollbar-visible bg-background fixed top-29.5 right-auto bottom-0 left-0 h-[calc(100vh-120px)] w-screen py-4 transition-transform duration-200 md:top-16 md:h-[calc(100vh-70px)] md:w-72 ${sidebarVisible ? "translate-y-0" : "max-md:-translate-y-[calc(100vh+200px)]"} overflow-y-auto md:sticky md:translate-x-0`}
       >
         <Wrapper>
           <div>
@@ -119,56 +120,3 @@ export default function Sidebar() {
   );
 }
 
-const docsLinks = [
-  {
-    title: "Getting Started",
-    url: "/docs",
-  },
-  {
-    title: "Introducton",
-    url: "/docs/introduction",
-  },
-  {
-    title: "Installation",
-    url: "/docs/installation",
-  },
-  {
-    title: "Theme",
-    url: "/docs/theme",
-  },
-  {
-    title: "Styling",
-    url: "/docs/styling",
-  },
-  {
-    title: "Customization",
-    url: "/docs/customization",
-  },
-];
-
-const componentsLinks = [
-  {
-    title: "Success",
-    url: "/docs/api/success",
-  },
-  {
-    title: "Error",
-    url: "/docs/api/error",
-  },
-  {
-    title: "Warning",
-    url: "/docs/apiwarning/",
-  },
-  {
-    title: "Info",
-    url: "/docs/api/info",
-  },
-  {
-    title: "Blank",
-    url: "/docs/api/blank",
-  },
-  {
-    title: "Promise",
-    url: "/docs/api/promise",
-  },
-];

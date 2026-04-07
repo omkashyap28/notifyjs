@@ -17,21 +17,40 @@ export default function Feedback() {
     message: "",
   });
 
-  const submitForm = (e: SubmitEvent) => {
+  const submitForm = async (e: SubmitEvent) => {
     e.preventDefault();
-    if (formValues.email === "") {
+
+    if (!formValues.email) {
       ping.error("Email required");
       return;
     }
-    if (formValues.message === "") {
+
+    if (!formValues.message) {
       ping.error("Message required");
       return;
     }
-    ping.success("Shared sucessfully");
-    setFormValues({
-      email: "",
-      message: "",
-    });
+
+    try {
+      await fetch("https://script.google.com/macros/s/AKfycbygRrMAEyEJRfQ4DrZE9areDFNiVPG9R0QWsCjK9bb0SaQrlmI2hUnBDFIniOcrcmXvuw/exec", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify(formValues),
+      });
+
+      ping.success("Shared successfully");
+
+      setFormValues({
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.log(error);
+      ping.error("Something went wrong");
+    }
   };
 
   return (
@@ -44,6 +63,7 @@ export default function Feedback() {
           <form onSubmit={submitForm} className="flex flex-col gap-5 py-8">
             <input
               type="email"
+              name="Email"
               className="rounded border border-neutral-500/20 bg-neutral-200/10 px-4 py-3 text-[16px] font-medium text-neutral-900 shadow ring-0 shadow-neutral-300/40 ring-transparent backdrop-blur-sm transition duration-200 outline-none placeholder:text-neutral-500/80 focus:ring-2 focus:ring-neutral-900/30 dark:bg-neutral-500/10 dark:text-neutral-50 dark:shadow-neutral-800/40 dark:focus:ring-neutral-100/30"
               placeholder="Enter your email"
               value={formValues.email}
@@ -55,6 +75,7 @@ export default function Feedback() {
               }
             />
             <textarea
+            name="Message"
               className="h-40 resize-none rounded border border-neutral-500/20 bg-neutral-200/10 px-4 py-3 text-[16px] font-medium text-neutral-900 shadow ring-0 shadow-neutral-300/40 ring-transparent backdrop-blur-sm transition duration-200 outline-none placeholder:text-neutral-500/80 focus:ring-2 focus:ring-neutral-900/30 dark:bg-neutral-500/10 dark:text-neutral-50 dark:shadow-neutral-800/40 dark:focus:ring-neutral-100/30"
               placeholder="Enter your suggestion here"
               value={formValues.message}

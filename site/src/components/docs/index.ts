@@ -1,9 +1,17 @@
 import MainHeading from "./main-heading";
 import Sidebar from "./sidebar";
-import MdxCode from "./mdx-code";
 import MarginBlock from "./margin-block";
 import MdxContainer from "./mdx-container";
 import MdxFooter from "./mdx-footer";
+import MdxCodeBlock from "./mdx-code.block";
+import ContentsTable from "./contents-table";
 
-
-export { MainHeading, Sidebar, MdxCode, MarginBlock, MdxContainer, MdxFooter };
+export {
+  MainHeading,
+  Sidebar,
+  MarginBlock,
+  MdxContainer,
+  MdxFooter,
+  MdxCodeBlock,
+  ContentsTable
+};

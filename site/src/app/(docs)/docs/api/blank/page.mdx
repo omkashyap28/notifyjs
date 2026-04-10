@@ -1,0 +1,38 @@
+# Blank
+
+Blank is a type of toast which did't represent any special kind of task. It is completely at yours what do you want to show your user.
+
+## Syntax
+
+```tsx
+blank(msg, options);
+```
+
+### Parameters
+
+- **msg**: Any valid message string value to display on toast.
+- **options**: Options is a javascript object used to add additional information & customization options.
+  - **title**: Any valid title string value show at the top of toast.
+  - **icon**: Any `string`, `emoji`, `image`, `svg` or `jsx` element to show at the place of icon.
+  - **style**: Any valid CSS property to apply on toast.
+  - **toastDuration**: Any valid number between 1-15.
+
+## Usage
+
+Just import `usePings` hook into any compenent and your compenent is now ready to produce toasts.
+
+```tsx
+import { usePings } from "react-pings";
+
+const MyComponent = () => {
+  const ping = usePings();
+
+  const showToast = () => {
+    ping("Toast Message", {
+      // options
+    });
+  };
+
+  return <button onClick={showToast}>Show Toast</button>;
+};
+```

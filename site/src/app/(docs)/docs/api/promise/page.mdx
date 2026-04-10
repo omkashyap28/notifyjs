@@ -1,0 +1,49 @@
+# Promise
+
+Promise is a type of toast which represents the promise status of any tasks. Its usage is quite different from other toasts.
+
+## Syntax
+
+```tsx
+promise(promise, status, opts);
+```
+
+### Parameters
+
+- **promise**: Any javascript promise.
+- **status**: Status is a javascript object used to show different types of messages for different- different promise states.
+  - **loading**: Any valid message string value to display on toast.
+  - **success**: Any valid message string value to display on toast.
+  - **error**: Any valid message string value to display on toast.
+- **options**: Options is a javascript object used to add additional information & customization options.
+  - **title**: Any valid title string value show at the top of toast.
+  - **icon**: Any string, emoji, image, svg or jsx element to show at the place of icon.
+  - **style**: Any valid CSS property to apply on toast.
+  - **toastDuration**: Any valid number between 1-15.
+
+## Usage
+
+Just import `usePings` hook into any compenent and your compenent is now ready to produce toasts.
+
+```tsx
+import { usePings } from "react-pings";
+
+const MyComponent = () => {
+  const ping = usePings();
+
+  const showToast = () => {
+    ping.promise(
+      new Promise((rej, res) => {
+        setTimeout(Math.random() > 0.5 ? rej : res, 1000); // example promise
+      }),
+      {
+        loading: "Saving...",
+        success: "Saved successfully",
+        error: "Error in saving",
+      }
+    );
+  };
+
+  return <button onClick={showToast}>Show Toast</button>;
+};
+```

@@ -1,0 +1,222 @@
+import { MarginBlock } from "../../../../components/docs";
+
+# Customization
+
+Customize without limits.
+
+<MarginBlock />
+
+**React-Pings** is created with customizable design system, which make it easy to customize only with props without any complexity.
+
+<MarginBlock />
+
+## Global Level Customizations
+
+Global level customizations apply at global level which make all toast work at similar way.
+
+### Toast Positions
+
+Use 6 position direactions to make sure user get every toast at the position of its choice.
+
+Valid positions are:
+
+- top-left
+- top-center (default)
+- top-right
+- bottom-left
+- bottom-center
+- bottom-right
+
+```tsx
+<PingsToastsProvider position="top-center">
+  <App />
+</PingsToastsProvider>
+```
+
+### Toast Duration
+
+Any valid number in the range of 5-15 is used as toast duration.
+
+```tsx
+<PingsToastsProvider toastDuration={7}>
+  <App />
+</PingsToastsProvider>
+```
+
+### Theme
+
+**React-Pings** have built in theme support for dark, light and system mode.
+
+```tsx
+<PingsToastsProvider theme="system">
+  <App />
+</PingsToastsProvider>
+```
+
+See [theme guide](/docs/theme) for detailed information
+
+### Animation Easing
+
+All valid CSS easing are also used as toast easing. e.g. `easeIn`, `easeOut`, `easeInOut`
+
+```tsx
+<PingsToastsProvider animationEase="easeIn">
+  <App />
+</PingsToastsProvider>
+```
+
+### Animation Type
+
+**React-Pings** support two animation types:
+
+1. spring (default)
+2. tween
+
+```tsx
+<PingsToastsProvider animationType="spring">
+  <App />
+</PingsToastsProvider>
+```
+
+### Dismissable
+
+Dismissable take boolean type value if `true` adds dismiss button at the top-right corner of toast. Default is `false`,
+
+```tsx
+<PingsToastsProvider dismissable={false}>
+  <App />
+</PingsToastsProvider>
+```
+
+### Icons Visibility
+
+Used to change icons visibility, if visible all icons are visible for every toast and if hidden all icons hidden for every toast.
+
+Types of values accept two types of value:
+
+1. visibile (default)
+2. hidden
+
+```tsx
+<PingsToastsProvider visibility="visible">
+  <App />
+</PingsToastsProvider>
+```
+
+### Toasts Limit
+
+Any valid number in the range of 10-20 is used as toast limit. Limits numbers of toast visibile at a time on screen. Default is 10.
+
+```tsx
+<PingsToastsProvider toastsLimit={10}>
+  <App />
+</PingsToastsProvider>
+```
+
+### CSS Inline Style
+
+Inline CSS also supported at global level, but with a twist. CSS you pass through props is applied on the container which renders all the toast, not at toast component.
+
+```tsx
+<PingsToastsProvider
+  style={{
+    backgroundColor: "red",
+  }}
+>
+  <App />
+</PingsToastsProvider>
+```
+
+<MarginBlock />
+
+## Components Level Customizations
+
+Components level customizations apply at single component not for all.
+
+> **Important** : Components level customizations are applied at component level, because every type toast may have different type of customizations. It means if you add a icon to success toast, so it is only applied to success toast not at all.
+
+### Icons
+
+**React-Pings** supports for `string`, `emoji`, `svg`, `image` or even `another` component as icons.
+
+```tsx
+import { usePings } from "react-pings";
+
+const MyComponent = () => {
+  const ping = usePings();
+
+  const showToast = () => {
+    ping.success("Success Toast", {
+      icon: "😉",
+    });
+  };
+
+  return <button onClick={showToast}>Show Toast</button>;
+};
+export default MyComponent;
+```
+
+### Title
+
+Title is used as a heading for toast, which can represent behavour of toast like which type of toast is this.
+
+```tsx
+import { usePings } from "react-pings";
+
+const MyComponent = () => {
+  const ping = usePings();
+
+  const showToast = () => {
+    ping.success("File saved successfully`", {
+      title: "Success",
+    });
+  };
+
+  return <button onClick={showToast}>Show Toast</button>;
+};
+export default MyComponent;
+```
+
+### Toast Duration
+
+Any valid number in the range of 5-15 is used as toast duration.
+
+```tsx
+import { usePings } from "react-pings";
+
+const MyComponent = () => {
+  const ping = usePings();
+
+  const showToast = () => {
+    ping.success("Success Toast", {
+      toastDuration: 10,
+    });
+  };
+
+  return <button onClick={showToast}>Show Toast</button>;
+};
+export default MyComponent;
+```
+
+### CSS Inline Style
+
+Inline CSS also supported at global level, but with a twist. CSS you pass through props is applied on the container which renders all the toast, not at toast component.
+
+```tsx
+import { usePings } from "react-pings";
+
+const MyComponent = () => {
+  const ping = usePings();
+
+  const showToast = () => {
+    ping.success("Success Toast", {
+      style: {
+        backgroundColor: "green",
+      },
+    });
+  };
+
+  return <button onClick={showToast}>Show Toast</button>;
+};
+export default MyComponent;
+```

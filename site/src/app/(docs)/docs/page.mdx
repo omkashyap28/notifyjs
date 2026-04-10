@@ -1,0 +1,90 @@
+import { MarginBlock, MdxTerminal } from "../../../components/docs";
+import { Terminal, CodeBlock } from "../../../components";
+
+# Getting Started
+
+Stop using boring toast notification! Try **React-Pings**.
+
+<MarginBlock />
+
+React-Pings is a modern solution for adding toast notifications to react apps, built on `reactjs`, `tailwindcss` & `motion` to give high performance without unnecessary re-renders to deliver top-notch performance in just 4kb size.
+
+<MarginBlock />
+
+## What is React-Pings?
+
+It is a toast notification library for modern react app built for deliver awesome toast without re-render complete app, which make it different from others. It is easy to use with top-level customizations.
+
+<MarginBlock />
+
+## Why use React-Pings?
+
+It provides large number of benefits which make developer happy to use
+
+1. Built on `react 19`
+2. No re-renders
+3. Elegent designs (should be more improved)
+4. Support for **light** & **dark** theme
+5. Easy to implement/customize
+6. Built in support for promises
+7. Support for `functions` & `jsx`
+8. Provides ui to customize toast
+9. Rich api support
+
+<MarginBlock />
+
+## Quick Start
+
+Using **react-pings** in your project is just 3 steps process decribed below:
+
+### Installation
+
+Install react-pings from npm or any other package manager.
+
+<MdxTerminal>npm install react-pings</MdxTerminal>
+
+See complete [installation](/docs/installation) for framework guides.
+
+### Provides
+
+Wrap your app into `PingsToastsProvider` to enable toasts from any component.
+
+```tsx title="main.tsx"
+import { PingsToastsProvider } from "react-pings";
+import "../node_modules/react-pings/dist/index.css";
+
+createRoot(document.getElementById("root")!).render(
+  <PingsToastsProvider
+    position="top-center"
+    toastDuration={5}
+    animationEase="spring"
+    dismissable={false}
+    icons="visible"
+    toastLimit={10}
+  >
+    <App />
+  </PingsToastsProvider>
+);
+```
+
+See [customizations](/docs/cutomization) options for your toasts.
+
+### Usage
+
+Now your app is compatible to generate toast from anywhere just import `usePings` hook into your app and create any type of toast.
+
+```tsx
+import { usePings } from "react-pings";
+
+const MyComponent = () => {
+  const ping = usePings();
+
+  const showToast = () => {
+    ping.success("Success Toast");
+  };
+
+  return <button onClick={showToast}>Show Toast</button>;
+};
+```
+
+See all [components](/docs/success) for other types of toasts.

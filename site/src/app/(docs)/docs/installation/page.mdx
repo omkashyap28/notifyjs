@@ -1,0 +1,129 @@
+import { MdxTerminal, MarginBlock } from "../../../../components/docs";
+
+# Installation
+
+Complete installation guides for react framework.
+
+<MarginBlock />
+
+This page guide you completely how to install & configure react-pings into your project or even in exinsting project.
+
+<MarginBlock />
+
+## Vite
+
+[Vite](https://vite.dev) is a popular frontend build tool for that aims to provide a faster and leaner development experience for modern web projects. To get **react-pings** into new project follow the steps:
+
+### Create App
+
+Create your project through npm or any other CLI tools
+
+<MdxTerminal>npm create vite@latest my-app</MdxTerminal>
+
+This will ask you some prompts, select `React`, `javascript/typescipt` after this you have new folder my-app.
+
+Now you have a vite app & completely able to install **react-pings** into your project. Just run the command into your termnal.
+
+<MdxTerminal>cd my-app npm install react-pings npm run dev</MdxTerminal>
+
+This command install **react-pings** library into your project and start development server.
+
+### Usage
+
+If you are in this section that means your project alredy have **react-pings** installed. Its time to use it according to your need.
+
+```tsx
+// main.tsx/ts/jsx/js
+
+import { PingsToastsProvider } from "react-pings";
+import "../node_modules/react-pings/dist/index.css"; // import css if needs
+
+createRoot(document.getElementById("root")).render(
+  //<OtherProviders>
+  <PingsToastsProvider>
+    <App />
+  </PingsToastsProvider>
+  //</OtherProviders>
+);
+```
+
+> Make sure you wrap your \<App /\> is just one level in depth. Otherwise it will make problems with your other providers.
+
+After following this step your app have `usePings` hook globally, just import it into any compenent and your compenent is now ready to produce toasts. Check the below code for example.
+
+```tsx
+import { usePings } from "react-pings";
+
+const MyComponent = () => {
+  const ping = usePings();
+
+  const showToast = () => {
+    ping.success("Success Toast");
+  };
+
+  return <button onClick={showToast}>Show Toast</button>;
+};
+```
+
+<MarginBlock />
+
+## Nextjs
+
+[Nextjs](https://nextjs.org) is very powerfull & popular react full stack framework used for building full stack applications.
+
+### Create App
+
+Create your project through npm or any other CLI tool.
+
+<MdxTerminal>npm create next-app@latest my-app -y</MdxTerminal>
+
+This command use **-y** flag to go with [default configuration](https://next.org) & skip prompts you can run without it.
+
+Now you have a nextjs app & completely able to install **react-pings** into your project. Just run the command into your termnal.
+
+<MdxTerminal>cd my-app npm install react-pings npm run dev</MdxTerminal>
+
+This command install **react-pings** library into your project and now you can use it.
+
+### Usage
+
+If you are in this section it means your project alredy have **react-pings** installed. Its time to use it according to your need.
+
+```tsx
+// main.tsx/ts/jsx/js
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    >
+      <body>
+        <PingsProvider>{children}</PingsProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+> Make sure you wrap your \{children\} is just one level in depth. Otherwise it will make problems with your other providers.
+
+After following this step your app have `usePings` hook globally, just import it into any compenent and your compenent is now ready to produce toasts. Check the below code for example.
+
+```tsx
+import { usePings } from "react-pings";
+
+const MyComponent = () => {
+  const ping = usePings();
+
+  const showToast = () => {
+    ping.success("Success Toast");
+  };
+
+  return <button onClick={showToast}>Show Toast</button>;
+};
+```

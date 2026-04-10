@@ -1,0 +1,23 @@
+import { MarginBlock } from "../../../../components/docs";
+
+# Theme
+
+Toggle theme simulatously
+
+<MarginBlock />
+
+**React-Pings** have built in theme support for `dark`, `light` and `system` mode.
+
+By default react-pings use system theme, for toggling theme you just need to pass theme prop to `<PingsToastsProvider>`.
+
+```tsx
+<PingsToastsProvider theme="system">
+  <App />
+</PingsToastsProvider>
+```
+
+or for nextjs
+
+```tsx
+<PingsToastsProvider theme="system">{children}</PingsToastsProvider>
+```

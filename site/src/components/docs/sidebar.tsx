@@ -32,7 +32,7 @@ export default function Sidebar() {
     if (!activePath || activePath === "") {
       handleActivePath("Getting Started");
     } else {
-      const allLinks = [...docsLinks, ...componentsLinks];
+      const allLinks = [...docsLinks, ...componentsLinks, ...hooksLink];
       const found = allLinks.find((link) => link.url === path);
       if (found) {
         handleActivePath(found.title);
@@ -124,7 +124,7 @@ export default function Sidebar() {
                     setActive(title);
                     setSidebarVisible(false);
                   }}
-                  className={`group dark:hover:bg-neutral-90 relative z-1 overflow-hidden rounded-md bg-transparent px-3 py-1 font-sans text-[17px] font-normal tracking-tight capitalize transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-neutral-900 ${active === title ? "bg-neutral-200 dark:bg-neutral-900" : "bg-transparent"}`}
+                  className={`group dark:hover:bg-neutral-90 relative z-1 overflow-hidden rounded-md bg-transparent px-3 py-1 font-sans text-[17px] font-normal tracking-tight transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-neutral-900 ${active === title ? "bg-neutral-200 dark:bg-neutral-900" : "bg-transparent"}`}
                 >
                   {title}
                 </Link>

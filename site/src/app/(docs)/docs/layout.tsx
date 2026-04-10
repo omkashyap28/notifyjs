@@ -1,4 +1,4 @@
-import { ContentsTable, MdxContainer, Sidebar } from "@/components/docs";
+import { MdxContainer, Sidebar } from "@/components/docs";
 import "./markdown.css";
 
 function Layout({ children }: { children: React.ReactNode }) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { componentsLinks, docsLinks } from "@/constants/links";
+import { componentsLinks, docsLinks, hooksLink } from "@/constants/links";
 import { ChevronRightIcon } from "@/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -45,4 +45,4 @@ export default function MdxFooter() {
   );
 }
 
-const allLinks = [...docsLinks, ...componentsLinks];
+const allLinks = [...docsLinks, ...componentsLinks, ...hooksLink];

@@ -8,7 +8,7 @@ import Terminal from "./terminal";
 import Heading2 from "./heading-2";
 import Heading3 from "./heading-3";
 import Code from "./code";
-import CopyButton from "./copy-button"
+import CopyButton from "./copy-button";
 
 export {
   Navbar,
@@ -21,5 +21,5 @@ export {
   Heading2,
   Heading3,
   Code,
-  CopyButton
+  CopyButton,
 };

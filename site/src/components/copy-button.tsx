@@ -1,6 +1,6 @@
 "use client";
 
-import { CopyCheckIcon, CopyIcon } from "@/icons";
+import { CheckIcon, CopyIcon } from "@/icons";
 import { useState } from "react";
 import { usePings } from "react-pings";
 
@@ -9,7 +9,7 @@ export default function CopyButton({
   className,
 }: {
   code: string;
-  className: string;
+  className?: string;
 }) {
   const [copied, setCopied] = useState<boolean>(false);
   const { success, error } = usePings();
@@ -28,9 +28,9 @@ export default function CopyButton({
   return (
     <button
       onClick={handleCopy}
-      className={`absolute top-2 right-4 flex items-center justify-center rounded-full p-2 text-xs transition hover:bg-neutral-300 dark:hover:bg-neutral-700 ${className}`}
+      className={`flex items-center justify-center rounded-full p-2 text-xs transition hover:bg-neutral-300 dark:hover:bg-neutral-700 ${className}`}
     >
-      {!copied ? <CopyIcon size={14} /> : <CopyCheckIcon size={14} />}
+      {!copied ? <CopyIcon size={14} /> : <CheckIcon size={14} />}
     </button>
   );
 }

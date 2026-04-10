@@ -12,10 +12,6 @@ export const docsLinks = [
     url: "/docs/theme",
   },
   {
-    title: "Styling",
-    url: "/docs/styling",
-  },
-  {
     title: "Customization",
     url: "/docs/customization",
   },
@@ -32,7 +28,7 @@ export const componentsLinks = [
   },
   {
     title: "Warning",
-    url: "/docs/apiwarning/",
+    url: "/docs/api/warning",
   },
   {
     title: "Info",
@@ -45,5 +41,12 @@ export const componentsLinks = [
   {
     title: "Promise",
     url: "/docs/api/promise",
+  },
+];
+
+export const hooksLink = [
+  {
+    title: "usePings",
+    url: "/docs/hooks/usePings",
   },
 ];

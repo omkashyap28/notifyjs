@@ -20,7 +20,7 @@ export default function Instructions() {
             <p className="-mb-2 text-sm font-normal tracking-normal text-neutral-700 dark:text-neutral-300">
               Install Package from npm or any package manager.
             </p>
-            <Terminal>{"npm install react-pings"}</Terminal>
+            <Terminal>npm install react-pings</Terminal>
           </section>
 
           <section>

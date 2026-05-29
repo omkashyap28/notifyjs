@@ -106,7 +106,7 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center gap-4">
-              <SearchBar />
+              {/* <SearchBar /> */}
               <Theme />
             </div>
           </div>
